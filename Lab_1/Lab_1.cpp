@@ -4,34 +4,25 @@
 
 int main()
 {
-	Doubly_Linked_List<int>* DLL = new Doubly_Linked_List<int>;
+	Doubly_Linked_List<double>* DLL = new Doubly_Linked_List < double > ;
 
 	int size = 0;
 
-	while (true) {
-		std::cout << "Enter value for new Node: ";
-		int val;
-		std::cin >> val;
-		system("cls");
-		if (val == -1)
-			break;
-		DLL->addLast(val);
-		size++;
-	}
+	DLL->Insert_from_kb();
 
 	std::cout << *DLL << std::endl;
 
 	system("pause");
 
-	//InsertSort<int>(DLL, DLL->size());
+	//InsertSort<double>(DLL, DLL->size(), 1);
 
-	//BubbleSort<int>(DLL, DLL->size());
+	//BubbleSort<double>(DLL, DLL->size(), 1);
 
-	//QuickSort<Doubly_Linked_List<int>>(DLL, DLL->size(), 0, DLL->size()-1);
+	//QuickSort<double>(DLL, DLL->size(), 0, DLL->size()-1, 0);
 
 	//MergeSort<int>(0, DLL->size() - 1, DLL->size(), DLL);
 
-	MergeSort<int>(DLL, 0, DLL->size() - 1);
+	//MergeSort<double>(DLL, 0, DLL->size() - 1, 1);
 
 	std::cout << *DLL << std::endl;
 

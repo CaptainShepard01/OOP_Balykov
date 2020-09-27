@@ -57,6 +57,20 @@ public:
 		_size++;
 	}
 
+	
+
+	void Insert_from_kb() {
+		while (true) {
+			std::cout << "To exit enter -1\nElse enter value for new Node: ";
+			T val;
+			std::cin >> val;
+			system("cls");
+			if (val == -1)
+				break;
+			this->addLast(val);
+		}
+	}
+
 	void clear() {
 		Node<T>* current = begin;
 		while (current) {
@@ -135,68 +149,180 @@ public:
 
 };
 
-
 template<typename T>
-void QuickSort(Doubly_Linked_List<T>* a, int length, int L, int R) {
+void QuickSort(Doubly_Linked_List<T>* a, int length, int L, int R, bool isDecr) {
 	int i = L, j = R;
 	int mid = (R + L) / 2;
 
 	T first = a->find_by_iter(mid)->value;
 	T sec;
 
-	do {
-		while (a->find_by_iter(i)->value < first)
-			i++;
+	if (isDecr) {
+		do {
+			while (a->find_by_iter(i)->value > first)
+				i++;
 
-		while (first < a->find_by_iter(j)->value)
-			j--;
+			while (first > a->find_by_iter(j)->value)
+				j--;
 
-		if (i <= j) {
-			sec = a->find_by_iter(i)->value;
-			a->find_by_iter(i)->value = a->find_by_iter(j)->value;
-			a->find_by_iter(j)->value = sec;
+			if (i <= j) {
+				sec = a->find_by_iter(i)->value;
+				a->find_by_iter(i)->value = a->find_by_iter(j)->value;
+				a->find_by_iter(j)->value = sec;
 
-			i++;
-			j--;
-		}
-	} while (i < j);
+				i++;
+				j--;
+			}
+		} while (i < j);
+	}
+	else {
+		do {
+			while (a->find_by_iter(i)->value < first)
+				i++;
+
+			while (first < a->find_by_iter(j)->value)
+				j--;
+
+			if (i <= j) {
+				sec = a->find_by_iter(i)->value;
+				a->find_by_iter(i)->value = a->find_by_iter(j)->value;
+				a->find_by_iter(j)->value = sec;
+
+				i++;
+				j--;
+			}
+		} while (i < j);
+	}
 
 	if (L < j)
-		QuickSort(a, length, L, j);
+		QuickSort(a, length, L, j, isDecr);
 
 	if (i < R)
-		QuickSort(a, length, i, R);
+		QuickSort(a, length, i, R, isDecr);
 }
 
 template<typename T>
-void BubbleSort(Doubly_Linked_List<T>* a, int size) {
+void BubbleSort(Doubly_Linked_List<T>* a, int size, bool isDecr) {
 	T x;
 	int i, j;
-	for (i = 0; i < size; i++) {
-		for (j = size - 1; j > i; j--) {
-			if (a->find_by_iter(j - 1)->value > a->find_by_iter(j)->value) {
-				x = a->find_by_iter(j - 1)->value;
-				a->find_by_iter(j - 1)->value = a->find_by_iter(j)->value;
-				a->find_by_iter(j)->value = x;
+	if (isDecr) {
+		for (i = 0; i < size; i++) {
+			for (j = size - 1; j > i; j--) {
+				if (a->find_by_iter(j - 1)->value < a->find_by_iter(j)->value) {
+					x = a->find_by_iter(j - 1)->value;
+					a->find_by_iter(j - 1)->value = a->find_by_iter(j)->value;
+					a->find_by_iter(j)->value = x;
+				}
+			}
+		}
+	}
+	else {
+		for (i = 0; i < size; i++) {
+			for (j = size - 1; j > i; j--) {
+				if (a->find_by_iter(j - 1)->value > a->find_by_iter(j)->value) {
+					x = a->find_by_iter(j - 1)->value;
+					a->find_by_iter(j - 1)->value = a->find_by_iter(j)->value;
+					a->find_by_iter(j)->value = x;
+				}
 			}
 		}
 	}
 }
 
 template<typename T>
-void InsertSort(Doubly_Linked_List<T>* a, int size) {
+void InsertSort(Doubly_Linked_List<T>* a, int size, bool isDecr) {
 	T x;
 	int i, j;
-	for (i = 0; i < size; ++i) {
-		x = a->find_by_iter(i)->value;
-		for (j = i - 1; j >= 0 && a->find_by_iter(j)->value > x; j--)
-			a->find_by_iter(j + 1)->value = a->find_by_iter(j)->value;
-		a->find_by_iter(j + 1)->value = x;
+	if (isDecr) {
+		for (i = 0; i < size; ++i) {
+			x = a->find_by_iter(i)->value;
+			for (j = i - 1; j >= 0 && a->find_by_iter(j)->value < x; j--)
+				a->find_by_iter(j + 1)->value = a->find_by_iter(j)->value;
+			a->find_by_iter(j + 1)->value = x;
+		}
+	}
+	else {
+		for (i = 0; i < size; ++i) {
+			x = a->find_by_iter(i)->value;
+			for (j = i - 1; j >= 0 && a->find_by_iter(j)->value > x; j--)
+				a->find_by_iter(j + 1)->value = a->find_by_iter(j)->value;
+			a->find_by_iter(j + 1)->value = x;
+		}
+	}
+}
+
+template<typename T>
+void merge(Doubly_Linked_List<T>* a, int lb, int split, int ub, bool isDecr) {
+	long pos1 = lb;
+	long pos2 = split + 1;
+
+	long pos3 = 0;
+
+	Doubly_Linked_List<T>* temp = new Doubly_Linked_List<T>;
+	while (temp->size() < ub - lb + 1) {
+		temp->addLast(0);
+	}
+
+
+	if (isDecr) {
+		while (pos1 <= split && pos2 <= ub) {
+			if (a->find_by_iter(pos1)->value > a->find_by_iter(pos2)->value) {
+				temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;
+			}
+			else {
+				temp->find_by_iter(pos3++)->value = a->find_by_iter(pos2++)->value;
+			}
+		}
+
+		while (pos2 <= ub) {
+			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos2++)->value;
+		}
+		while (pos1 <= split) {
+			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;		}
+
+		for (pos3 = 0; pos3 < ub - lb + 1; pos3++) {
+			a->find_by_iter(lb + pos3)->value = temp->find_by_iter(pos3)->value;
+		}
+	}
+	else {
+		while (pos1 <= split && pos2 <= ub) {
+			if (a->find_by_iter(pos1)->value < a->find_by_iter(pos2)->value) {
+				temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;
+			}
+			else {
+				temp->find_by_iter(pos3++)->value = a->find_by_iter(pos2++)->value;
+			}
+		}
+
+		while (pos2 <= ub) {
+			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos2++)->value;
+		}
+		while (pos1 <= split) {
+			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;
+		}
+
+		for (pos3 = 0; pos3 < ub - lb + 1; pos3++) {
+			a->find_by_iter(lb + pos3)->value = temp->find_by_iter(pos3)->value;
+		}
+	}
+	delete temp;
+}
+
+template<typename T>
+void MergeSort(Doubly_Linked_List<T>* a, int lb, int ub, bool isDecr) {
+	int split;
+
+	if (lb < ub) {
+		split = (lb + ub) / 2;
+
+		MergeSort(a, lb, split, isDecr);
+		MergeSort(a, split + 1, ub, isDecr);
+		merge(a, lb, split, ub, isDecr);
 	}
 }
 
 //template<typename T>
-//void MergeSort(int l, int r, int length, Doubly_Linked_List<T>* a)
+//void MergeSort(int l, int r, int length, Doubly_Linked_List<T>* a, bool isDecr)
 //{
 //	if (r == l)
 //		return;
@@ -245,55 +371,4 @@ void InsertSort(Doubly_Linked_List<T>* a, int size) {
 //
 //}
 
-template<typename T>
-void merge(Doubly_Linked_List<T>* a, int lb, int split, int ub) {
-	long pos1 = lb;
-	long pos2 = split + 1;
-
-	long pos3 = 0;
-
-	Doubly_Linked_List<int>* temp = new Doubly_Linked_List<int>;
-	while (temp->size() < ub - lb + 1) {
-		temp->addLast(0);
-	}
-
-	while (pos1 <= split && pos2 <= ub) {
-		if (a->find_by_iter(pos1)->value < a->find_by_iter(pos2)->value) {
-			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;
-			temp->addLast(0);
-		}
-		else {
-			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos2++)->value;
-			temp->addLast(0);
-		}
-	}
-
-	while (pos2 <= ub) {
-		temp->find_by_iter(pos3++)->value = a->find_by_iter(pos2++)->value;
-		temp->addLast(0);
-	}
-	while (pos1 <= split) {
-		temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;
-		temp->addLast(0);
-	}
-
-	for (pos3 = 0; pos3 < ub - lb + 1; pos3++) {
-		a->find_by_iter(lb + pos3)->value = temp->find_by_iter(pos3)->value;
-	}
-
-	delete temp;
-}
-
-template<typename T>
-void MergeSort(Doubly_Linked_List<T>* a, int lb, int ub) {
-	int split;
-
-	if (lb < ub) {
-		split = (lb + ub) / 2;
-
-		MergeSort(a, lb, split);
-		MergeSort(a, split + 1, ub);
-		merge(a, lb, split, ub);
-	}
-}
-
+class 
