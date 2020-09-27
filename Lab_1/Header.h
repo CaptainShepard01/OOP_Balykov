@@ -42,8 +42,6 @@ public:
 
 	void addLast(T value) {
 		auto node = new Node<T>{ value };
-		node->value = value;
-		node->next = nullptr;
 		if (begin == nullptr) {
 			end = node; begin = node;
 			node->iter = 0;
@@ -371,4 +369,11 @@ void MergeSort(Doubly_Linked_List<T>* a, int lb, int ub, bool isDecr) {
 //
 //}
 
-class 
+
+
+class MomentOfTime {
+private:
+	int year;
+	int month;
+	int day;
+};
