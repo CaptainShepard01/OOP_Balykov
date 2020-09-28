@@ -1,5 +1,5 @@
-﻿#pragma once
-#include "string"
+#pragma once
+#include <string>
 #include <iostream>
 #include <iomanip>
 #include <exception>
@@ -65,6 +65,7 @@ public:
 
 	int getWeekNumberInYear() const;
 	//int getWeekNumberInMonth() const;
+	int getWeekNumberInYear_naive() const;
 
 	bool isValid()const;
 

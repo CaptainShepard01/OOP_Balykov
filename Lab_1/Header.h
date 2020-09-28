@@ -366,12 +366,3 @@ void MergeSort(Doubly_Linked_List<T>* a, int lb, int ub, bool isDecr) {
 //		a->find_by_iter(i + l)->value = buf->find_by_iter(i)->value;
 //
 //}
-
-
-
-class MomentOfTime {
-private:
-	int year;
-	int month;
-	int day;
-};

@@ -261,7 +261,7 @@ std::string Date::getWeekday() const {
 }
 
 int Date::getWeekNumberInYear() const {
-	int doy = day;  
+	int doy = day;
 
 	for (int i = 1; i < month; i++) {
 		if (i == 2 && !isLeap(year))
@@ -269,20 +269,46 @@ int Date::getWeekNumberInYear() const {
 		else
 			doy += MAX_DAYS_IN_MONTH[i];
 	}
-	int dow = getDayOfWeekNumber(); 
+	int dow = getDayOfWeekNumber();
 	if (dow == 0)
 		dow = 7;
 
 	int w = (doy - dow + 10) / 7;
 	int dowJan1 = Date(31, 12, year - 1, hour, minute, second).getDayOfWeekNumber() - 1;   // find out first of year's day
-	
+
 	if (dowJan1 == -1)
 		dowJan1 = 6;
-	
-	int weekNum = ((julian + 6) / 7);   // probably better.  CHECK THIS LINE. (See comments.)
+
+	int weekNum = ((doy + 6) / 7);   // probably better.  CHECK THIS LINE. (See comments.)
 	if (dow < dowJan1)                 // adjust for being after Saturday of week #1
 		++weekNum;
 	return (weekNum);
+}
+
+int Date::getWeekNumberInYear_naive() const {
+	int week = 0;
+	int JanFirst = this->getDayOfWeekNumber();
+	int day_iter = 0;
+	int days_to_substract = 0;
+
+	if (JanFirst != 0) {
+		day_iter += (7 - JanFirst);
+		week++;
+		days_to_substract = (7 - JanFirst);
+	}
+
+	for (int i = 1; i < month; i++) {
+		if (i == 2 && !isLeap(year))
+			day_iter += 28;
+		else
+			day_iter += MAX_DAYS_IN_MONTH[i];
+	}
+
+	day_iter += day;
+	day_iter -= days_to_substract;
+
+	week += (day_iter / 7);
+	return week;
 }
 
 std::ostream& operator<<(std::ostream& out, const Date& date) {
