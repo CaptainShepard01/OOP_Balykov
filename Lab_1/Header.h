@@ -84,7 +84,7 @@ public:
 		return _size;
 	}
 
-	int operator[](std::size_t index) {
+	T operator[](std::size_t index) {
 		Node<T>* current = begin;
 		std::size_t cur_index = 0;
 		while (current) {
@@ -143,8 +143,6 @@ public:
 		}
 
 	}
-
-
 };
 
 template<typename T>
