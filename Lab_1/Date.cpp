@@ -100,15 +100,17 @@ bool MomentOfTime::operator<(const MomentOfTime& rhs) const {
 	if (hour != rhs.hour) return hour < rhs.hour;
 	if (minute != rhs.minute) return minute < rhs.minute;
 	if (second != rhs.second) return second < rhs.second;
+	return false;
 }
 
-bool MomentOfTime::operator>(const MomentOfTime& rhs) const{
+bool MomentOfTime::operator>(const MomentOfTime& rhs) const {
 	if (year != rhs.year) return year > rhs.year;
 	if (month != rhs.month) return month > rhs.month;
 	if (day != rhs.day) return day > rhs.day;
 	if (hour != rhs.hour) return hour > rhs.hour;
 	if (minute != rhs.minute) return minute > rhs.minute;
 	if (second != rhs.second) return second > rhs.second;
+	return false;
 }
 
 
@@ -297,13 +299,27 @@ int Date::getWeekNumberInYear() const {
 	return (weekNum);
 }
 
-int Date::getWeekNumberInYear_naive() const {
+int Date::getWeekNumberInYear_naive() const {                //from Saturday
 	int week = 0;
 	int JanFirst = Date(1, 1, year, 0, 0, 0).getDayOfWeekNumber();
+	switch (JanFirst) {
+	case 0: JanFirst = 6;
+		break;
+	case 1: JanFirst = 0;
+		break;
+	case 2: JanFirst = 1;
+		break;
+	case 3: JanFirst = 2;
+		break;
+	case 4: JanFirst = 3;
+		break;
+	case 5: JanFirst = 4;
+		break;
+	case 6: JanFirst = 5;
+		break;
+	}
 	int day_iter = 0;
 	int days_to_substract = 0;
-
-	
 
 	if (JanFirst != 0) {
 		day_iter += (7 - JanFirst);
@@ -311,15 +327,11 @@ int Date::getWeekNumberInYear_naive() const {
 		days_to_substract = (7 - JanFirst);
 	}
 
-
-
 	if (month == 1) {
 		day_iter += day;
 		day_iter -= days_to_substract;
 		week += (day_iter / 7);
-		if (day_iter % 7 != 0) {
-			week += 1;
-		}
+		
 		return week;
 	}
 

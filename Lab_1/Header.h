@@ -87,10 +87,16 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& out, const Doubly_Linked_List<T>& list) {
 		Node<T>* current = list.begin;
-		out << "[ ";
+		out << "[";
 		while (current) {
-			out << current->value << " ";
-			current = current->next;
+			if (current == list.end) {
+				out << '(' << current->value << ')';
+				current = current->next;
+			}
+			else {
+				out << '(' << current->value << ')' << " ";
+				current = current->next;
+			}
 		}
 		out << "]";
 		return out;

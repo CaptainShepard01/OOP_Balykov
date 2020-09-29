@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iostream>
 #define DOCTEST_CONFIG_IMPLEMENT
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+//#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
 //#define current_ns unit_doctest
@@ -30,14 +30,14 @@ TEST_CASE("Doubly_linked_list work with string.") {
 		InsertSort(DLL, DLL->size(), 0);
 		std::stringstream ss;
 		ss << *DLL;
-		CHECK(ss.str() == "[ Aaaaa Gggggg Hello ]");
+		CHECK(ss.str() == "[(Aaaaa) (Gggggg) (Hello)]");
 	}
 
 	SUBCASE("Sort decreasing.") {
 		QuickSort(DLL, DLL->size(), 0, DLL->size() - 1, 1);
 		std::stringstream ss;
 		ss << *DLL;
-		CHECK(ss.str() == "[ Hello Gggggg Aaaaa ]");
+		CHECK(ss.str() == "[(Hello) (Gggggg) (Aaaaa)]");
 	}
 }
 
@@ -53,14 +53,14 @@ TEST_CASE("Doubly_linked_list work with int.") {
 		BubbleSort(DLL, DLL->size(), 0);
 		std::stringstream ss;
 		ss << *DLL;
-		CHECK(ss.str() == "[ -5 18 26 ]");
+		CHECK(ss.str() == "[(-5) (18) (26)]");
 	}
 
 	SUBCASE("Sort decreasing.") {
 		MergeSort(DLL, 0, DLL->size() - 1, 1);
 		std::stringstream ss;
 		ss << *DLL;
-		CHECK(ss.str() == "[ 26 18 -5 ]");
+		CHECK(ss.str() == "[(26) (18) (-5)]");
 	}
 }
 
@@ -76,14 +76,14 @@ TEST_CASE("Doubly_linked_list work with double.") {
 		QuickSort(DLL, DLL->size(), 0, DLL->size() - 1, 0);
 		std::stringstream ss;
 		ss << *DLL;
-		CHECK(ss.str() == "[ -5.68 2.3 5.68 ]");
+		CHECK(ss.str() == "[(-5.68) (2.3) (5.68)]");
 	}
 
 	SUBCASE("Sort decreasing.") {
 		InsertSort(DLL, DLL->size(), 1);
 		std::stringstream ss;
 		ss << *DLL;
-		CHECK(ss.str() == "[ 5.68 2.3 -5.68 ]");
+		CHECK(ss.str() == "[(5.68) (2.3) (-5.68)]");
 	}
 }
 
@@ -238,79 +238,85 @@ TEST_CASE("Week number") {
 
 	SUBCASE("Day at the beginning of the year") {
 		Date date{ 5,1,2020,0,40,0 };
-		CHECK(date.getWeekNumberInYear_naive() == 2);
+		CHECK(date.getWeekNumberInYear_naive() == 1);
 	}
 
+	SUBCASE("29.09.2020") {
+		Date date{ 29, 9, 2020, 0, 0, 0 };
+		CHECK(date.getWeekNumberInYear_naive() == 40);
+	}
 }
 
 TEST_CASE("Doubly_linked_list work with Date") {
 	auto DLL = new Doubly_Linked_List<Date>;
-	Date newDate(1, 1, 2020, 1, 1, 1);
 
-	DLL->addLast(newDate);
+	DLL->addLast(Date(1, 1, 2020, 1, 1, 1));
 
 	CHECK(DLL->find_by_iter(0)->value == Date(1, 1, 2020, 1, 1, 1));
 
 	DLL->addLast(Date(2, 1, 2020, 1, 1, 1));
 	DLL->addLast(Date(1, 1, 2019, 1, 1, 1));
 
+	SUBCASE("Adding elements") {
+		std::stringstream ss;
+		ss << *DLL;
+		CHECK(ss.str() == "[(01/01/2020 01:01:01) (02/01/2020 01:01:01) (01/01/2019 01:01:01)]");
+	}
+
 	SUBCASE("Increasing sort") {
 		QuickSort(DLL, DLL->size(), 0, DLL->size() - 1, 0);
 		std::stringstream ss;
 		ss << *DLL;
-		std::cout << ss.str();
-		CHECK(ss.str() == "[ -5.68 2.3 5.68 ]");
+		//std::cout << ss.str();
+		CHECK(ss.str() == "[(01/01/2019 01:01:01) (01/01/2020 01:01:01) (02/01/2020 01:01:01)]");
+	}
+
+	SUBCASE("Decreasing sort") {
+		InsertSort(DLL, DLL->size(), 1);
+		std::stringstream ss;
+		ss << *DLL;
+		//std::cout << ss.str();
+		CHECK(ss.str() == "[(02/01/2020 01:01:01) (01/01/2020 01:01:01) (01/01/2019 01:01:01)]");
 	}
 }
 
-//TEST_CASE("Number of week.") {
-//	Date d(29, 9, 2020, 10, 10, 10);
-//
-//	CHECK(d.getWeekNumberInYear_naive() == 39);
-//
-//}
 
-//int main(int argc, char** argv) {
-//	//doctest stuff
-//	doctest::Context context;
-//	context.applyCommandLine(argc, argv);
-//	int res = context.run();
-//	if (context.shouldExit())
-//		return res;
-//
-//	//my return code
-//	int client_stuff_return_code = 0;
-//
-//	return res + client_stuff_return_code;
-//}
-//
-//
-//int main(int argc, char** argv)
-//{
-//	Doubly_Linked_List<double>* DLL = new Doubly_Linked_List < double > ;
-//
-//	int size = 0;
-//
-//
-//	DLL->Insert_from_kb();
-//
-//	DLL->operator[](1);
-//	std::cout << *DLL << std::endl;
-//
-//	system("pause");
-//
-//	//InsertSort<double>(DLL, DLL->size(), 1);
-//
-//	//BubbleSort<double>(DLL, DLL->size(), 1);
-//
-//	//QuickSort<double>(DLL, DLL->size(), 0, DLL->size()-1, 0);
-//
-//	//MergeSort<int>(0, DLL->size() - 1, DLL->size(), DLL);
-//
-//	//MergeSort<double>(DLL, 0, DLL->size() - 1, 1);
-//
-//	std::cout << *DLL << std::endl;
-//
-//	delete DLL;
-//	return 0;
-//}
+int main(int argc, char** argv) {
+	//doctest stuff
+	doctest::Context context;
+	context.applyCommandLine(argc, argv);
+	int res = context.run();
+	if (context.shouldExit())
+		return res;
+
+	//Doubly_Linked_List<double>* DLL = new Doubly_Linked_List < double >;
+	//
+	//int size = 0;
+	//
+	//
+	//DLL->Insert_from_kb();
+	//
+	//DLL->operator[](1);
+	//std::cout << *DLL << std::endl;
+	//
+	//system("pause");
+
+	//InsertSort<double>(DLL, DLL->size(), 1);
+
+	//BubbleSort<double>(DLL, DLL->size(), 1);
+
+	//QuickSort<double>(DLL, DLL->size(), 0, DLL->size()-1, 0);
+
+	//MergeSort<int>(0, DLL->size() - 1, DLL->size(), DLL);
+
+	//MergeSort<double>(DLL, 0, DLL->size() - 1, 1);
+
+	//std::cout << *DLL << std::endl;
+
+	//delete DLL;
+
+	int client_stuff_return_code = 0;
+
+	return res + client_stuff_return_code;
+}
+
