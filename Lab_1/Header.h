@@ -55,19 +55,7 @@ public:
 		_size++;
 	}
 
-	
-
-	void Insert_from_kb() {
-		while (true) {
-			std::cout << "To exit enter -1\nElse enter value for new Node: ";
-			T val;
-			std::cin >> val;
-			system("cls");
-			if (val == -1)
-				break;
-			this->addLast(val);
-		}
-	}
+	void Insert_from_kb();
 
 	void clear() {
 		Node<T>* current = begin;
@@ -108,42 +96,146 @@ public:
 		return out;
 	}
 
-	Node<T>* find_by_iter(int iter) {
-		Node<T>* cur = begin;
-		while (cur) {
-			if (cur->iter == iter)
-				break;
-			cur = cur->next;
-		}
-		return cur;
-	}
+	Node<T>* find_by_iter(int iter);
 
-	Node<T>* find(T key) {
-		Node<T>* cur = begin;
-		while (cur) {
-			if (cur->value == key)
-				break;
-			cur = cur->next;
-		}
-		return cur;
-	}
+	Node<T>* find(T key);
 
-	bool RemoveLast() {
-		if (begin == nullptr) {
-			std::cout << "There are no elements!" << std::endl << std::endl;
-			return false;
-		}
-		else {
-			Node<T>* cur = end;
-			end = (end)->prev;
-			(end)->next = nullptr;
-			delete cur;
-			std::cout << "Successful!" << std::endl;
-			return true;
-		}
-
-	}
+	bool RemoveLast();
 };
+
+
+//template<typename T>
+//void MergeSort(int l, int r, int length, Doubly_Linked_List<T>* a, bool isDecr)
+//{
+//	if (r == l)
+//		return;
+//
+//	if (r - l == 1) {
+//		if (a->find_by_iter(r)->value < a->find_by_iter(l)->value) {
+//			int temp = a->find_by_iter(r)->value;
+//			a->find_by_iter(r)->value = a->find_by_iter(l)->value;
+//			a->find_by_iter(l)->value = temp;
+//		}
+//		return;
+//	}
+//
+//	int m = (r + l) / 2;
+//
+//
+//	MergeSort(l, m, length, a);
+//
+//	MergeSort(m + 1, r, length, a);
+//
+//	Doubly_Linked_List<T>* buf = new Doubly_Linked_List<T>;
+//	while (buf->size() < length) {
+//		buf->addLast(0);
+//	}
+//
+//	int xl = l;
+//	int xr = m + 1;
+//	int cur = 0;
+//
+//	while (r - l + 1 != cur)
+//	{
+//		if (xl > m)
+//			buf->find_by_iter(cur++)->value = a->find_by_iter(xr++)->value;
+//
+//		else if (xr > r)
+//			buf->find_by_iter(cur++)->value = a->find_by_iter(xl++)->value;
+//
+//		else if (a->find_by_iter(xl)->value > a->find_by_iter(xr)->value)
+//			buf->find_by_iter(cur++)->value = a->find_by_iter(xr++)->value;
+//
+//		else
+//			buf->find_by_iter(cur++)->value = a->find_by_iter(xl++)->value;
+//	}
+//	for (int i = 0; i < cur; i++)
+//		a->find_by_iter(i + l)->value = buf->find_by_iter(i)->value;
+//
+//}
+
+template<typename T>
+inline void Doubly_Linked_List<T>::Insert_from_kb()
+{
+	while (true)
+	{
+		T val;
+
+		std::string a;
+
+		std::cout << "Current type of value: " << typeid(val).name() << std::endl << std::endl;
+		std::cout << "Enter the value (to stop adding type 'end'): ";
+
+		std::stringstream ss;
+
+		std::getline(std::cin, a);
+
+		ss.str(a.c_str());
+
+		if (ss.str() == "end")
+		{
+			system("cls");
+			break;
+		}
+
+		ss >> val;
+
+		if (ss.fail())
+		{
+			ss.clear();
+
+			system("cls");
+			std::cout << "You can't enter different types of values!" << std::endl;
+			system("pause");
+			system("cls");
+			continue;
+		}
+
+		system("cls");
+
+		this->addLast(val);
+	}
+}
+
+template<typename T>
+inline Node<T>* Doubly_Linked_List<T>::find_by_iter(int iter)
+{
+	Node<T>* cur = begin;
+	while (cur) {
+		if (cur->iter == iter)
+			break;
+		cur = cur->next;
+	}
+	return cur;
+}
+
+template<typename T>
+inline Node<T>* Doubly_Linked_List<T>::find(T key) {
+	Node<T>* cur = begin;
+	while (cur) {
+		if (cur->value == key)
+			break;
+		cur = cur->next;
+	}
+	return cur;
+}
+
+template<typename T>
+inline bool Doubly_Linked_List<T>::RemoveLast()
+{
+	if (begin == nullptr) {
+		std::cout << "There are no elements!" << std::endl << std::endl;
+		return false;
+	}
+	else {
+		Node<T>* cur = end;
+		end = (end)->prev;
+		(end)->next = nullptr;
+		delete cur;
+		std::cout << "Successful!" << std::endl;
+		return true;
+	}
+}
 
 template<typename T>
 void QuickSort(Doubly_Linked_List<T>* a, int length, int L, int R, bool isDecr) {
@@ -254,9 +346,11 @@ void merge(Doubly_Linked_List<T>* a, int lb, int split, int ub, bool isDecr) {
 
 	long pos3 = 0;
 
+	T tmp = {};
+
 	Doubly_Linked_List<T>* temp = new Doubly_Linked_List<T>;
 	while (temp->size() < ub - lb + 1) {
-		temp->addLast(0);
+		temp->addLast(tmp);
 	}
 
 
@@ -274,7 +368,8 @@ void merge(Doubly_Linked_List<T>* a, int lb, int split, int ub, bool isDecr) {
 			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos2++)->value;
 		}
 		while (pos1 <= split) {
-			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;		}
+			temp->find_by_iter(pos3++)->value = a->find_by_iter(pos1++)->value;
+		}
 
 		for (pos3 = 0; pos3 < ub - lb + 1; pos3++) {
 			a->find_by_iter(lb + pos3)->value = temp->find_by_iter(pos3)->value;
@@ -316,53 +411,3 @@ void MergeSort(Doubly_Linked_List<T>* a, int lb, int ub, bool isDecr) {
 		merge(a, lb, split, ub, isDecr);
 	}
 }
-
-//template<typename T>
-//void MergeSort(int l, int r, int length, Doubly_Linked_List<T>* a, bool isDecr)
-//{
-//	if (r == l)
-//		return;
-//
-//	if (r - l == 1) {
-//		if (a->find_by_iter(r)->value < a->find_by_iter(l)->value) {
-//			int temp = a->find_by_iter(r)->value;
-//			a->find_by_iter(r)->value = a->find_by_iter(l)->value;
-//			a->find_by_iter(l)->value = temp;
-//		}
-//		return;
-//	}
-//
-//	int m = (r + l) / 2;
-//
-//
-//	MergeSort(l, m, length, a);
-//
-//	MergeSort(m + 1, r, length, a);
-//
-//	Doubly_Linked_List<T>* buf = new Doubly_Linked_List<T>;
-//	while (buf->size() < length) {
-//		buf->addLast(0);
-//	}
-//
-//	int xl = l;
-//	int xr = m + 1;
-//	int cur = 0;
-//
-//	while (r - l + 1 != cur)
-//	{
-//		if (xl > m)
-//			buf->find_by_iter(cur++)->value = a->find_by_iter(xr++)->value;
-//
-//		else if (xr > r)
-//			buf->find_by_iter(cur++)->value = a->find_by_iter(xl++)->value;
-//
-//		else if (a->find_by_iter(xl)->value > a->find_by_iter(xr)->value)
-//			buf->find_by_iter(cur++)->value = a->find_by_iter(xr++)->value;
-//
-//		else
-//			buf->find_by_iter(cur++)->value = a->find_by_iter(xl++)->value;
-//	}
-//	for (int i = 0; i < cur; i++)
-//		a->find_by_iter(i + l)->value = buf->find_by_iter(i)->value;
-//
-//}

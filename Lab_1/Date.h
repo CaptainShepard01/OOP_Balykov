@@ -43,6 +43,7 @@ public:
 	inline int getSecond() const { return second; }
 
 	bool operator<(const MomentOfTime& rhs) const;
+	bool operator>(const MomentOfTime& rhs) const;
 	bool operator==(const MomentOfTime& rhs) const;
 
 	TimeDifference operator-(const MomentOfTime& rhs);

@@ -102,6 +102,17 @@ bool MomentOfTime::operator<(const MomentOfTime& rhs) const {
 	if (second != rhs.second) return second < rhs.second;
 }
 
+bool MomentOfTime::operator>(const MomentOfTime& rhs) const{
+	if (year != rhs.year) return year > rhs.year;
+	if (month != rhs.month) return month > rhs.month;
+	if (day != rhs.day) return day > rhs.day;
+	if (hour != rhs.hour) return hour > rhs.hour;
+	if (minute != rhs.minute) return minute > rhs.minute;
+	if (second != rhs.second) return second > rhs.second;
+}
+
+
+
 bool MomentOfTime::operator==(const MomentOfTime& rhs) const {
 	if (year != rhs.year) return false;
 	if (month != rhs.month) return false;
@@ -150,6 +161,7 @@ bool Date::isValid() const {
 }
 
 void Date::makeRandomDate() {
+
 }
 
 Date Date::operator+(const TimeDifference& diff) const {
@@ -287,14 +299,28 @@ int Date::getWeekNumberInYear() const {
 
 int Date::getWeekNumberInYear_naive() const {
 	int week = 0;
-	int JanFirst = this->getDayOfWeekNumber();
+	int JanFirst = Date(1, 1, year, 0, 0, 0).getDayOfWeekNumber();
 	int day_iter = 0;
 	int days_to_substract = 0;
+
+	
 
 	if (JanFirst != 0) {
 		day_iter += (7 - JanFirst);
 		week++;
 		days_to_substract = (7 - JanFirst);
+	}
+
+
+
+	if (month == 1) {
+		day_iter += day;
+		day_iter -= days_to_substract;
+		week += (day_iter / 7);
+		if (day_iter % 7 != 0) {
+			week += 1;
+		}
+		return week;
 	}
 
 	for (int i = 1; i < month; i++) {
@@ -308,6 +334,9 @@ int Date::getWeekNumberInYear_naive() const {
 	day_iter -= days_to_substract;
 
 	week += (day_iter / 7);
+	if (day_iter % 7 != 0) {
+		week += 1;
+	}
 	return week;
 }
 
