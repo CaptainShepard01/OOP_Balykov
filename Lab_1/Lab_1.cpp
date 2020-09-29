@@ -6,18 +6,6 @@
 //#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-//#define current_ns unit_doctest
-//
-//namespace current_ns {
-//	int main(int argc, char** argv);
-//}
-//
-//int main(int argc, char** argv) {
-//
-//
-//	return current_ns::main(argc, argv);
-//}
-
 TEST_CASE("Doubly_linked_list work with string.") {
 	auto DLL = new Doubly_Linked_List<std::string>;
 
@@ -101,32 +89,6 @@ TEST_CASE("Doubly_linked_list work with double.") {
 	}
 }
 
-//TEST_CASE("Doubly_linked_list work with vector.") {
-//	auto DLL = new Doubly_Linked_List<std::vector<int>>;
-//	std::vector<int> myVector;
-//
-//	myVector.push_back(-5);
-//	myVector.push_back(35);
-//	DLL->addLast(myVector);
-//	myVector.clear();
-//
-//	myVector.push_back(4);
-//	DLL->addLast(myVector);
-//	myVector.clear();
-//
-//	myVector.push_back(56);
-//	myVector.push_back(0);
-//	myVector.push_back(-8);
-//	DLL->addLast(myVector);
-//	
-//	SUBCASE("Sort increasing.") {
-//		QuickSort(DLL, DLL->size(), 0, DLL->size() - 1, 0);
-//		std::stringstream ss;
-//		ss << *DLL;
-//		//CHECK(ss.str() == "[ -5.68 2.3 5.68 ]");
-//	}
-//}
-
 TEST_CASE("Day of week") {
 	SUBCASE("Deadline first lab") {
 		Date date{ 29,9,2020,23,59,59 };
@@ -159,32 +121,32 @@ TEST_CASE("Date print") {
 }
 
 TEST_CASE("Date difference") {
-	MomentOfTime moment{ 27,10,2001,10,50,31 };
+	Time_Moment moment{ 27,10,2001,10,50,31 };
 
 	SUBCASE("Without difference") {
 		TimeDifference diff(moment, moment);
-		CHECK(diff == MomentOfTime{ 0,0,0,0,0,0 });
+		CHECK(diff == Time_Moment{ 0,0,0,0,0,0 });
 	}
 
-	MomentOfTime moment1{ 3,3,2001,10,50,31 };
-	MomentOfTime moment2{ 7,2,2001,10,50,31 };
+	Time_Moment moment1{ 3,3,2001,10,50,31 };
+	Time_Moment moment2{ 7,2,2001,10,50,31 };
 
 	SUBCASE("Smaller - bigger") {
 		TimeDifference diff(moment1, moment2);
-		CHECK(diff == MomentOfTime{ 24,0,0,0,0,0 });
+		CHECK(diff == Time_Moment{ 24,0,0,0,0,0 });
 	}
 
 	SUBCASE("Bigger - smaller") {
 		TimeDifference diff(moment2, moment1);
-		CHECK(diff == MomentOfTime{ 24,0,0,0,0,0 });
+		CHECK(diff == Time_Moment{ 24,0,0,0,0,0 });
 	}
 
 	SUBCASE("Time difference") {
-		MomentOfTime moment1{ 3,3,2001,16,23,0 };
-		MomentOfTime moment2{ 7,2,2001,10,50,31 };
+		Time_Moment moment1{ 3,3,2001,16,23,0 };
+		Time_Moment moment2{ 7,2,2001,10,50,31 };
 
 		TimeDifference diff(moment1, moment2);
-		CHECK(diff == MomentOfTime{ 24,0,0,5,32,29 });
+		CHECK(diff == Time_Moment{ 24,0,0,5,32,29 });
 	}
 }
 
@@ -207,8 +169,8 @@ TEST_CASE("Date operator +") {
 
 TEST_CASE("Date operator -") {
 	Date date{ 27,10,2001,10,50,31 };
-	MomentOfTime moment1{ 3,3,2001,16,23,0 };
-	MomentOfTime moment2{ 7,2,2001,10,50,31 };
+	Time_Moment moment1{ 3,3,2001,16,23,0 };
+	Time_Moment moment2{ 7,2,2001,10,50,31 };
 
 	SUBCASE("Subtract zero time") {
 		date -= TimeDifference(0, 0, 0, 0, 0, 0);
@@ -258,6 +220,11 @@ TEST_CASE("Week number") {
 	SUBCASE("29.09.2020") {
 		Date date{ 29, 9, 2020, 0, 0, 0 };
 		CHECK(date.getWeekNumberInYear_naive() == 40);
+	}
+
+	SUBCASE("20.01.2022") {
+		Date date{ 20, 1, 2022, 0, 0, 0 };
+		CHECK(date.getWeekNumberInYear_naive() == 3);
 	}
 }
 
@@ -333,4 +300,3 @@ int main(int argc, char** argv) {
 
 	return res + client_stuff_return_code;
 }
-

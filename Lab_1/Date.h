@@ -9,7 +9,7 @@ const int MAX_DAYS_IN_MONTH[13] = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 3
 class Date;
 class TimeDifference;
 
-class MomentOfTime {
+class Time_Moment {
 protected:
 	int day = 0;
 	int month = 0;
@@ -21,10 +21,10 @@ protected:
 
 	int UTC = 0;
 
-	MomentOfTime normalize()const;
+	Time_Moment normalize()const;
 public:
-	MomentOfTime() {}
-	explicit MomentOfTime(int day, int month, int year,
+	Time_Moment() {}
+	explicit Time_Moment(int day, int month, int year,
 		int hour, int minute, int second, int UTC = 0)
 		: day(day),
 		month(month),
@@ -42,21 +42,21 @@ public:
 	inline int getMinute() const { return minute; }
 	inline int getSecond() const { return second; }
 
-	bool operator<(const MomentOfTime& rhs) const;
-	bool operator>(const MomentOfTime& rhs) const;
-	bool operator==(const MomentOfTime& rhs) const;
+	bool operator<(const Time_Moment& rhs) const;
+	bool operator>(const Time_Moment& rhs) const;
+	bool operator==(const Time_Moment& rhs) const;
 
-	TimeDifference operator-(const MomentOfTime& rhs);
+	TimeDifference operator-(const Time_Moment& rhs);
 };
 
-class Date : public MomentOfTime {
+class Date : public Time_Moment {
 	void makeRandomDate();
 	int getDayOfWeekNumber() const;
 public:
 	Date() { makeRandomDate(); };
 	explicit Date(int day, int month, int year,
 		int hour, int minute, int second, int UTC = 0)
-		: MomentOfTime(day, month, year, hour, minute, second, UTC)
+		: Time_Moment(day, month, year, hour, minute, second, UTC)
 	{
 		if (!isValid())
 			throw std::invalid_argument("Invalid date!");
@@ -66,7 +66,6 @@ public:
 
 	int getWeekNumberInYear() const;
 	//int getWeekNumberInMonth() const;
-	int getWeekNumberInYear_naive() const;
 
 	bool isValid()const;
 
@@ -82,14 +81,15 @@ public:
 	friend std::istream& operator>>(std::istream& stream, Date& date);
 };
 
-class TimeDifference : public MomentOfTime {
+class TimeDifference : public Time_Moment {
 public:
+	static TimeDifference week;
 	explicit TimeDifference(int day, int month, int year, int hour, int minute, int second)
-		: MomentOfTime(day, month, year, hour, minute, second) {
+		: Time_Moment(day, month, year, hour, minute, second) {
 		if (!isValid())
 			throw std::invalid_argument("Invalid time difference!");
 	}
-	explicit TimeDifference(const MomentOfTime& moment1, const MomentOfTime& moment2);
+	explicit TimeDifference(const Time_Moment& moment1, const Time_Moment& moment2);
 
 	bool isValid();
 };

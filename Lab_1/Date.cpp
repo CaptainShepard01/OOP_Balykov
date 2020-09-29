@@ -1,13 +1,15 @@
 #include "Date.h"
 
+TimeDifference TimeDifference::week{ 7,0,0,0,0,0 };
+
 inline bool isLeap(unsigned int year) {
 	return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 }
 
-//MomentOfTime
+//Time_Moment
 
-MomentOfTime MomentOfTime::normalize() const {
-	MomentOfTime m;
+Time_Moment Time_Moment::normalize() const {
+	Time_Moment m = *this;
 
 	if (UTC < 0) {
 		bool isOverflow = false;
@@ -93,7 +95,7 @@ MomentOfTime MomentOfTime::normalize() const {
 	return m;
 }
 
-bool MomentOfTime::operator<(const MomentOfTime& rhs) const {
+bool Time_Moment::operator<(const Time_Moment& rhs) const {
 	if (year != rhs.year) return year < rhs.year;
 	if (month != rhs.month) return month < rhs.month;
 	if (day != rhs.day) return day < rhs.day;
@@ -103,7 +105,7 @@ bool MomentOfTime::operator<(const MomentOfTime& rhs) const {
 	return false;
 }
 
-bool MomentOfTime::operator>(const MomentOfTime& rhs) const {
+bool Time_Moment::operator>(const Time_Moment& rhs) const {
 	if (year != rhs.year) return year > rhs.year;
 	if (month != rhs.month) return month > rhs.month;
 	if (day != rhs.day) return day > rhs.day;
@@ -113,7 +115,7 @@ bool MomentOfTime::operator>(const MomentOfTime& rhs) const {
 	return false;
 }
 
-bool MomentOfTime::operator==(const MomentOfTime& rhs) const {
+bool Time_Moment::operator==(const Time_Moment& rhs) const {
 	if (year != rhs.year) return false;
 	if (month != rhs.month) return false;
 	if (day != rhs.day) return false;
@@ -124,7 +126,7 @@ bool MomentOfTime::operator==(const MomentOfTime& rhs) const {
 	return true;
 }
 
-TimeDifference MomentOfTime::operator-(const MomentOfTime& rhs) {
+TimeDifference Time_Moment::operator-(const Time_Moment& rhs) {
 	return TimeDifference(*this, rhs);
 }
 
@@ -202,16 +204,20 @@ Date Date::operator+(const TimeDifference& diff) const {
 		}
 	}
 	else if (month == 12) {
-		dayDiv /= 32;
+		dayDiv = day / 32;
 		if (day > 31) {
 			year++;
 			month = 1;
 		}
 		day %= 31;
+		if (day == 0)
+			day = 31;
 	}
 	else {
+		dayDiv = day / (MAX_DAYS_IN_MONTH[month] + 1);
 		day %= MAX_DAYS_IN_MONTH[month];
-		dayDiv /= (MAX_DAYS_IN_MONTH[month] + 1);
+		if(day == 0)
+			day = MAX_DAYS_IN_MONTH[month];
 	}
 
 	month += dayDiv;
@@ -237,7 +243,7 @@ Date Date::operator-=(const TimeDifference& diff) {
 }
 
 TimeDifference Date::operator-(const Date& rhs) const {
-	MomentOfTime d1 = this->normalize(), d2 = rhs.normalize();
+	Time_Moment d1 = this->normalize(), d2 = rhs.normalize();
 	return TimeDifference(d1, d2);
 }
 
@@ -273,81 +279,34 @@ std::string Date::getWeekday() const {
 }
 
 int Date::getWeekNumberInYear() const {
-	int doy = day;
+	int result = 0;
+	int JanFirst = Date(1, 1, year, 0, 0, 0).getDayOfWeekNumber() - 2; // Monday == 0 ... Thursday == 3
+	if (JanFirst == -2)
+		JanFirst = 5;
+	if (JanFirst == -1)
+		JanFirst = 6;
 
-	for (int i = 1; i < month; i++) {
-		if (i == 2 && !isLeap(year))
-			doy += 28;
-		else
-			doy += MAX_DAYS_IN_MONTH[i];
-	}
-	int dow = getDayOfWeekNumber();
-	if (dow == 0)
-		dow = 7;
+	Date firstThursday;
 
-	int w = (doy - dow + 10) / 7;
-	int dowJan1 = Date(31, 12, year - 1, hour, minute, second).getDayOfWeekNumber() - 1;   // find out first of year's day
+	if (JanFirst <= 3)
+		firstThursday = Date{ 4 - JanFirst,1,year,0,0,0 };
+	else
+		firstThursday = Date{ 4 + (7 - JanFirst),1,year,0,0,0 };
 
-	if (dowJan1 == -1)
-		dowJan1 = 6;
+	TimeDifference current = *this - firstThursday;
 
-	int weekNum = ((doy + 6) / 7);   // probably better.  CHECK THIS LINE. (See comments.)
-	if (dow < dowJan1)                 // adjust for being after Saturday of week #1
-		++weekNum;
-	return (weekNum);
-}
-
-int Date::getWeekNumberInYear_naive() const {                //from Saturday
-	int week = 0;
-	int JanFirst = Date(1, 1, year, 0, 0, 0).getDayOfWeekNumber();
-	switch (JanFirst) {
-	case 0: JanFirst = 6;
-		break;
-	case 1: JanFirst = 0;
-		break;
-	case 2: JanFirst = 1;
-		break;
-	case 3: JanFirst = 2;
-		break;
-	case 4: JanFirst = 3;
-		break;
-	case 5: JanFirst = 4;
-		break;
-	case 6: JanFirst = 5;
-		break;
-	}
-	int day_iter = 0;
-	int days_to_substract = 0;
-
-	if (JanFirst != 0) {
-		day_iter += (7 - JanFirst);
-		week++;
-		days_to_substract = (7 - JanFirst);
+	if (JanFirst > 3 && this->getDay() <= 3 && current.getMonth() == 0) {
+		return Date{ 31,12,year - 1,0,0,0 }.getWeekNumberInYear();
 	}
 
-	if (month == 1) {
-		day_iter += day;
-		day_iter -= days_to_substract;
-		week += (day_iter / 7);
-		
-		return week;
+
+	while (current.getDay() > 3 || current.getMonth() > 0) {
+		firstThursday += TimeDifference::week;
+		result++;
+		current = *this - firstThursday;
 	}
 
-	for (int i = 1; i < month; i++) {
-		if (i == 2 && !isLeap(year))
-			day_iter += 28;
-		else
-			day_iter += MAX_DAYS_IN_MONTH[i];
-	}
-
-	day_iter += day;
-	day_iter -= days_to_substract;
-
-	week += (day_iter / 7);
-	if (day_iter % 7 != 0) {
-		week += 1;
-	}
-	return week;
+	return result + 1;
 }
 
 std::ostream& operator<<(std::ostream& out, const Date& date) {
@@ -374,8 +333,8 @@ std::istream& operator>>(std::istream& in, Date& date) {
 
 //TimeDifference
 
-TimeDifference::TimeDifference(const MomentOfTime& moment1, const MomentOfTime& moment2) {
-	MomentOfTime min, max;
+TimeDifference::TimeDifference(const Time_Moment& moment1, const Time_Moment& moment2) {
+	Time_Moment min, max;
 
 	if (moment1 < moment2) {
 		min = moment1;
