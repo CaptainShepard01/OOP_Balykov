@@ -113,8 +113,6 @@ bool MomentOfTime::operator>(const MomentOfTime& rhs) const {
 	return false;
 }
 
-
-
 bool MomentOfTime::operator==(const MomentOfTime& rhs) const {
 	if (year != rhs.year) return false;
 	if (month != rhs.month) return false;

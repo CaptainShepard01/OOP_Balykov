@@ -62,6 +62,20 @@ TEST_CASE("Doubly_linked_list work with int.") {
 		ss << *DLL;
 		CHECK(ss.str() == "[(26) (18) (-5)]");
 	}
+
+	SUBCASE("Shell sort incr") {
+		ShellSort(DLL, DLL->size(), 0);
+		std::stringstream ss;
+		ss << *DLL;
+		CHECK(ss.str() == "[(-5) (18) (26)]");
+	}
+
+	SUBCASE("Shell sort decr") {
+		ShellSort(DLL, DLL->size(), 1);
+		std::stringstream ss;
+		ss << *DLL;
+		CHECK(ss.str() == "[(26) (18) (-5)]");
+	}
 }
 
 TEST_CASE("Doubly_linked_list work with double.") {
