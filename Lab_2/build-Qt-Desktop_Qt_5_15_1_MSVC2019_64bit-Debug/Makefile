@@ -240,6 +240,7 @@ Makefile: ..\Qt\Qt.pro ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\win32-
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\qt_config.prf \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\win32-msvc\qmake.conf \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\exclusive_builds.prf \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\common\msvc-version.conf \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\toolchain.prf \
@@ -269,7 +270,6 @@ Makefile: ..\Qt\Qt.pro ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\win32-
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Gui.prl \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Core.prl \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\qtmain.prl \
-		.qmake.stash \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\build_pass.prf \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Widgetsd.prl \
 		..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Guid.prl \
@@ -432,6 +432,7 @@ Makefile: ..\Qt\Qt.pro ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\win32-
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\qt_config.prf:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\win32-msvc\qmake.conf:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\exclusive_builds.prf:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\common\msvc-version.conf:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\toolchain.prf:
@@ -461,7 +462,6 @@ Makefile: ..\Qt\Qt.pro ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\win32-
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Gui.prl:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Core.prl:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\qtmain.prl:
-.qmake.stash:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\mkspecs\features\build_pass.prf:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Widgetsd.prl:
 ..\..\..\..\Programs\Qt\5.15.1\msvc2019_64\lib\Qt5Guid.prl:
