@@ -12,35 +12,86 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
       ui->setupUi(this);
+      StartReading();
 }
 
 MainWindow::~MainWindow()
 {
-    saveToFile();
     delete ui;
 }
 
 struct Note{
     QString data = "";
-    QString time = QDateTime::currentDateTime().toString();
+    QDateTime time = QDateTime::currentDateTime();
 };
 
-void MainWindow::saveToFile()
+void MainWindow::on_DeleteAll_clicked()
 {
-    QFile file{STORAGE};
-    if (!file.open(QIODevice::WriteOnly |QIODevice::Append | QIODevice::Text))
-               return;
-    QTextStream stream(&file);
+    QFile file(STORAGE);
+    file.open(QIODevice::WriteOnly);
+    file.close();
 
-    Note note;
+    for (int i = ui->Table->rowCount(); i >= 0 ; i--)
+    {
+        ui->Table->removeRow(i);
+    }
+}
 
-    for(int i=0;i<ui->Table->rowCount();++i){
-        note.data=ui->Table->item(i, 1)->text();
-        note.time=ui->Table->item(i,0)->text();
-        stream << note.time << note.data;
+void FileReading(QVector<Note> &notes)
+{
+    QFile file(STORAGE);
+
+    file.open(QIODevice::ReadOnly);
+
+    QDataStream in(&file);
+
+    while (!in.atEnd())
+    {
+        Note n;
+
+        in >> n.time;
+        in >> n.data;
+
+        notes.push_back(n);
     }
 
     file.close();
+}
+
+void FileWriting(Note note)
+{
+    QFile file(STORAGE);
+
+    file.open(QIODevice::Append);
+
+    QDataStream out(&file);
+
+    out << note.time;
+    out << note.data;
+
+    file.close();
+}
+
+void MainWindow::StartReading()
+{
+    QVector<Note> notes;
+
+    FileReading(notes);
+
+    for (int i = 0; i < notes.length(); i++)
+    {
+        QString str = notes[i].time.toString();
+
+        ui->Table->insertRow(0);
+
+        auto time = new QTableWidgetItem(notes[i].time.toString());
+
+        ui->Table->setItem(0,0,time);
+
+        auto data = new QTableWidgetItem(notes[i].data);
+
+        ui->Table->setItem(0,1,data);
+    }
 }
 
 void MainWindow::on_save_clicked()
@@ -55,7 +106,7 @@ ui->Input->clear();
 
 ui->Table->insertRow(0);
 
-auto time = new QTableWidgetItem(note.time);
+auto time = new QTableWidgetItem(note.time.toString());
 
 ui->Table->setItem(0,0,time);
 
@@ -64,6 +115,8 @@ auto data = new QTableWidgetItem(note.data);
 ui->Table->setItem(0,1,data);
 
 ui->Table->resizeRowsToContents();
+
+FileWriting(note);
 }
 
 void MainWindow::on_Table_cellDoubleClicked(int row, int column)

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>910</width>
-    <height>586</height>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,6 +55,12 @@
       <height>231</height>
      </rect>
     </property>
+    <property name="markdown">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Enter your note here...</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="save">
     <property name="geometry">
@@ -67,6 +73,19 @@
     </property>
     <property name="text">
      <string>Save</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="DeleteAll">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>540</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DeleteAll</string>
     </property>
    </widget>
   </widget>
@@ -282,8 +301,8 @@
    <slot>copy()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>205</x>
-     <y>135</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>205</x>

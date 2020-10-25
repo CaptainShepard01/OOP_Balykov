@@ -42,6 +42,7 @@ public:
     QTableWidget *Table;
     QTextEdit *Input;
     QPushButton *save;
+    QPushButton *DeleteAll;
     QMenuBar *menubar;
     QMenu *menu_File;
     QMenu *menu_Edit;
@@ -52,7 +53,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(910, 586);
+        MainWindow->resize(910, 610);
         action_New = new QAction(MainWindow);
         action_New->setObjectName(QString::fromUtf8("action_New"));
         action_Open = new QAction(MainWindow);
@@ -96,6 +97,9 @@ public:
         save = new QPushButton(centralwidget);
         save->setObjectName(QString::fromUtf8("save"));
         save->setGeometry(QRect(140, 230, 80, 21));
+        DeleteAll = new QPushButton(centralwidget);
+        DeleteAll->setObjectName(QString::fromUtf8("DeleteAll"));
+        DeleteAll->setGeometry(QRect(810, 540, 80, 21));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -188,7 +192,10 @@ public:
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = Table->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
+        Input->setMarkdown(QString());
+        Input->setPlaceholderText(QCoreApplication::translate("MainWindow", "Enter your note here...", nullptr));
         save->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
+        DeleteAll->setText(QCoreApplication::translate("MainWindow", "DeleteAll", nullptr));
         menu_File->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         menu_Edit->setTitle(QCoreApplication::translate("MainWindow", "&Edit", nullptr));
         menu_About->setTitle(QCoreApplication::translate("MainWindow", "&About", nullptr));

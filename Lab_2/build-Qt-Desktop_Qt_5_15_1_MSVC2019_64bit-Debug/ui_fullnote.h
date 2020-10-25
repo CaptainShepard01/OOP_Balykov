@@ -36,6 +36,7 @@ public:
         pushButton->setGeometry(QRect(300, 410, 80, 21));
 
         retranslateUi(FullNote);
+        QObject::connect(pushButton, SIGNAL(clicked()), FullNote, SLOT(close()));
 
         QMetaObject::connectSlotsByName(FullNote);
     } // setupUi
