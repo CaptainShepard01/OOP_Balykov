@@ -16,6 +16,9 @@ public:
     ~FullNote();
     void Insert(QString str);
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::FullNote *ui;
 };

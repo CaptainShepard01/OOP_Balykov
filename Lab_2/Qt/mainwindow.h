@@ -21,6 +21,8 @@ private slots:
 
     void on_Table_cellDoubleClicked(int row, int column);
 
+    void saveToFile();
+
 private:
     Ui::MainWindow *ui;
 };

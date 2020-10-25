@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QPushButton>
 
 QT_BEGIN_NAMESPACE
 
@@ -20,15 +21,19 @@ class Ui_FullNote
 {
 public:
     QPlainTextEdit *NoteShow;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *FullNote)
     {
         if (FullNote->objectName().isEmpty())
             FullNote->setObjectName(QString::fromUtf8("FullNote"));
-        FullNote->resize(400, 300);
+        FullNote->resize(703, 441);
         NoteShow = new QPlainTextEdit(FullNote);
         NoteShow->setObjectName(QString::fromUtf8("NoteShow"));
-        NoteShow->setGeometry(QRect(-10, 0, 411, 271));
+        NoteShow->setGeometry(QRect(10, 0, 681, 411));
+        pushButton = new QPushButton(FullNote);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(300, 410, 80, 21));
 
         retranslateUi(FullNote);
 
@@ -37,7 +42,8 @@ public:
 
     void retranslateUi(QDialog *FullNote)
     {
-        FullNote->setWindowTitle(QCoreApplication::translate("FullNote", "Dialog", nullptr));
+        FullNote->setWindowTitle(QCoreApplication::translate("FullNote", "FullNote", nullptr));
+        pushButton->setText(QCoreApplication::translate("FullNote", "Close", nullptr));
     } // retranslateUi
 
 };

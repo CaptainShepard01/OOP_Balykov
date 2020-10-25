@@ -16,3 +16,8 @@ FullNote::~FullNote()
 void FullNote::Insert(QString str){
     ui->NoteShow->insertPlainText(str);
 }
+
+void FullNote::on_pushButton_clicked()
+{
+    this->close();
+}
