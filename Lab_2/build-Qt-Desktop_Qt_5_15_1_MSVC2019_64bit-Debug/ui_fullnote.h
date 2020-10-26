@@ -28,6 +28,8 @@ public:
         if (FullNote->objectName().isEmpty())
             FullNote->setObjectName(QString::fromUtf8("FullNote"));
         FullNote->resize(703, 441);
+        FullNote->setMinimumSize(QSize(703, 441));
+        FullNote->setMaximumSize(QSize(703, 441));
         NoteShow = new QPlainTextEdit(FullNote);
         NoteShow->setObjectName(QString::fromUtf8("NoteShow"));
         NoteShow->setGeometry(QRect(10, 0, 681, 411));

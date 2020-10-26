@@ -10,6 +10,24 @@
     <height>610</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>910</width>
+    <height>610</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>910</width>
+    <height>610</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -17,11 +35,14 @@
    <widget class="QTableWidget" name="Table">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>370</x>
       <y>0</y>
       <width>521</width>
       <height>541</height>
      </rect>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
     </property>
     <property name="gridStyle">
      <enum>Qt::SolidLine</enum>
@@ -51,7 +72,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>361</width>
+      <width>351</width>
       <height>231</height>
      </rect>
     </property>
@@ -88,6 +109,25 @@
      <string>DeleteAll</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="Archivator">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>540</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Archivate selected</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -115,11 +155,13 @@
     <addaction name="action_Undo"/>
     <addaction name="action_Redo"/>
     <addaction name="separator"/>
+    <addaction name="action_Paste"/>
     <addaction name="action_Cut"/>
     <addaction name="action_Copy"/>
-    <addaction name="action_Paste"/>
+    <addaction name="action_Archivate_selected"/>
     <addaction name="separator"/>
     <addaction name="action_Select_all"/>
+    <addaction name="action_Delete_all"/>
    </widget>
    <widget class="QMenu" name="menu_About">
     <property name="title">
@@ -209,6 +251,22 @@
   <action name="action_About_program">
    <property name="text">
     <string>&amp;About program</string>
+   </property>
+  </action>
+  <action name="action_Delete_all">
+   <property name="text">
+    <string>&amp;Delete all</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
+  </action>
+  <action name="action_Archivate_selected">
+   <property name="text">
+    <string>&amp;Archivate selected</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Ins</string>
    </property>
   </action>
  </widget>
@@ -403,6 +461,38 @@
     <hint type="destinationlabel">
      <x>199</x>
      <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Delete_all</sender>
+   <signal>triggered()</signal>
+   <receiver>DeleteAll</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>849</x>
+     <y>570</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Archivate_selected</sender>
+   <signal>triggered()</signal>
+   <receiver>Archivator</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>740</x>
+     <y>570</y>
     </hint>
    </hints>
   </connection>

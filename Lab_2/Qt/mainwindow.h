@@ -24,6 +24,9 @@ private slots:
     void StartReading();
     void on_DeleteAll_clicked();
 
+
+    void on_Archivator_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
