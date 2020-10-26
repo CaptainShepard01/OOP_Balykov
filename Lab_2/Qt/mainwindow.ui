@@ -32,101 +32,275 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableWidget" name="Table">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>0</y>
-      <width>521</width>
-      <height>541</height>
-     </rect>
-    </property>
-    <property name="selectionBehavior">
-     <enum>QAbstractItemView::SelectRows</enum>
-    </property>
-    <property name="gridStyle">
-     <enum>Qt::SolidLine</enum>
-    </property>
-    <property name="columnCount">
-     <number>2</number>
-    </property>
-    <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>130</number>
-    </attribute>
-    <attribute name="horizontalHeaderStretchLastSection">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="enabled">
      <bool>true</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Date</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Note</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QTextEdit" name="Input">
+    </property>
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>0</y>
-      <width>351</width>
-      <height>231</height>
+      <width>911</width>
+      <height>601</height>
      </rect>
     </property>
-    <property name="markdown">
-     <string/>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
-    <property name="placeholderText">
-     <string>Enter your note here...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="save">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>230</y>
-      <width>80</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Save</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="DeleteAll">
-    <property name="geometry">
-     <rect>
-      <x>810</x>
-      <y>540</y>
-      <width>80</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>DeleteAll</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Archivator">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>540</y>
-      <width>101</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>Archivate selected</string>
-    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Input and Actual notes</string>
+     </attribute>
+     <widget class="QGroupBox" name="Insertion">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>401</width>
+        <height>491</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Input section</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <widget class="QTextEdit" name="Input">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>50</y>
+         <width>391</width>
+         <height>271</height>
+        </rect>
+       </property>
+       <property name="markdown">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Enter your note here...</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_Input">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>20</y>
+         <width>72</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Personal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Work</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="save">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>320</y>
+         <width>80</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="Notes">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>0</y>
+        <width>481</width>
+        <height>491</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Notes</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <widget class="QTableWidget" name="Table">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>421</width>
+         <height>401</height>
+        </rect>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustIgnored</enum>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="gridStyle">
+        <enum>Qt::SolidLine</enum>
+       </property>
+       <property name="columnCount">
+        <number>2</number>
+       </property>
+       <attribute name="horizontalHeaderMinimumSectionSize">
+        <number>30</number>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>130</number>
+       </attribute>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>19</number>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Date</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Note</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QPushButton" name="Delete">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>450</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Delete selected</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Archivator">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>450</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Archivate selected</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="DeleteAll">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>450</y>
+         <width>80</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>DeleteAll</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_Notes">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>20</y>
+         <width>72</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Personal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Work</string>
+        </property>
+       </item>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Archive</string>
+     </attribute>
+     <widget class="QTableWidget" name="Archive">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>50</y>
+        <width>421</width>
+        <height>401</height>
+       </rect>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="gridStyle">
+       <enum>Qt::SolidLine</enum>
+      </property>
+      <property name="columnCount">
+       <number>2</number>
+      </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>130</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Date</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Note</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QPushButton" name="Dearchivate">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>450</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dearchivate selected</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -158,6 +332,7 @@
     <addaction name="action_Paste"/>
     <addaction name="action_Cut"/>
     <addaction name="action_Copy"/>
+    <addaction name="action_Delete_selected"/>
     <addaction name="action_Archivate_selected"/>
     <addaction name="separator"/>
     <addaction name="action_Select_all"/>
@@ -266,7 +441,31 @@
     <string>&amp;Archivate selected</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+Ins</string>
+    <string>Ctrl+Ins</string>
+   </property>
+  </action>
+  <action name="action_Delete_selected">
+   <property name="text">
+    <string>&amp;Delete selected</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionTab_switcher">
+   <property name="text">
+    <string>Tab switcher</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Tab</string>
+   </property>
+  </action>
+  <action name="actionEnter_new_note">
+   <property name="text">
+    <string>Enter new note</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Return</string>
    </property>
   </action>
  </widget>
@@ -493,6 +692,54 @@
     <hint type="destinationlabel">
      <x>740</x>
      <y>570</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Delete_selected</sender>
+   <signal>triggered()</signal>
+   <receiver>Delete</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>624</x>
+     <y>570</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTab_switcher</sender>
+   <signal>triggered()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>update()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>455</x>
+     <y>320</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEnter_new_note</sender>
+   <signal>triggered()</signal>
+   <receiver>Input</receiver>
+   <slot>raise()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>230</y>
     </hint>
    </hints>
   </connection>

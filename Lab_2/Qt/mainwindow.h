@@ -22,10 +22,21 @@ private slots:
     void on_Table_cellDoubleClicked(int row, int column);
 
     void StartReading();
+    void StartReadingArchive();
     void on_DeleteAll_clicked();
 
-
+    void AddToArchive(QVector<int> indexes);
+    void RemoveFromArchive(QVector<int> indexes);
+    void DeleteSelected(QVector<int> indexes);
     void on_Archivator_clicked();
+
+    void on_Delete_clicked();
+
+    void on_Dearchivate_clicked();
+
+    void on_Archive_cellDoubleClicked(int row, int column);
+
+    void on_Table_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::MainWindow *ui;
