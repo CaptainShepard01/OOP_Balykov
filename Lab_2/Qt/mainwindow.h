@@ -38,6 +38,8 @@ private slots:
 
     void on_Table_customContextMenuRequested(const QPoint &pos);
 
+    void on_Input_cursorPositionChanged();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -27,6 +27,7 @@ struct Note{
     QDateTime time = QDateTime::currentDateTime();
     int ID = -1;
     bool isArchived = false;
+    QString type = "Personal";
 };
 
 void MainWindow::on_DeleteAll_clicked()
@@ -62,7 +63,7 @@ void FileReadingArchive(QVector<Note> &notes)
         in >> n.data;
         in >> n.ID;
         in >> n.isArchived;
-
+        in >> n.type;
         if (n.isArchived == true)
              {
                  notes.push_back(n);
@@ -88,6 +89,7 @@ void FileReading(QVector<Note> &notes)
         in >> n.data;
         in >> n.ID;
         in >> n.isArchived;
+        in >> n.type;
 
         if (n.isArchived == false)
              {
@@ -110,6 +112,7 @@ void FileWriting(Note note)
     out << note.data;
     out << note.ID;
     out << note.isArchived;
+    out << note.type;
 
     file.close();
 }
@@ -179,6 +182,7 @@ int LastIndex(QString filename)
         in >> n.data;
         in >> n.ID;
         in >> n.isArchived;
+        in >> n.type;
     }
 
     file.close();
@@ -190,9 +194,15 @@ void MainWindow::on_save_clicked()
 {
     Note note;
     note.data = ui->Input->toPlainText();
+    if(note.data.length()>=200)
+    {
+        return;
+    }
 
     if(note.data=="")
         return;
+
+    note.type = ui->comboBox_Input->currentText();
 
     ui->Input->clear();
 
@@ -233,39 +243,42 @@ void MainWindow::RemoveFromArchive(QVector<int> indexes)
 {
     QFile file(STORAGE);
 
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
 
-    QVector<Note> temp;
+    Note temp;
+
+    long long pos = 0;
 
     QDataStream in(&file);
 
-    while (!in.atEnd()){
-        Note n;
+    while (!in.atEnd())
+       {
+           pos = file.pos();
 
-        in >> n.time;
-        in >> n.data;
-        in >> n.ID;
-        in >> n.isArchived;
+           in >> temp.time;
+           in >> temp.data;
+           in >> temp.ID;
+           in >> temp.isArchived;
+           in >> temp.type;
 
-        temp.push_back(n);
-    }
+           for (int i = 0; i < indexes.length(); i++)
+           {
+               if (temp.time.toString() == ui->Archive->item(indexes[i], 0)->text() && temp.data == ui->Archive->item(indexes[i], 1)->text())
+               {
+                   file.seek(pos);
 
-    file.close();
+                   temp.isArchived = false;
 
-    for(int i=0;i<temp.length();++i){
-        for(int j=0;j<indexes.length();++j){
-            if(temp[i].time.toString()==ui->Archive->item(indexes[j], 0)->text() && temp[i].data==ui->Archive->item(indexes[j], 1)->text()){
-                temp[i].isArchived=false;
-            }
-        }
-    }
+                   in << temp.time;
+                   in << temp.data;
+                   in << temp.ID;
+                   in << temp.isArchived;
+                   in << temp.type;
 
-    file.open(QIODevice::WriteOnly);
-    QDataStream out(&file);
-
-    for(int i =0;i<temp.length();++i){
-        out << temp[i].time << temp[i].data << temp[i].ID << temp[i].isArchived;
-    }
+                   break;
+               }
+           }
+       }
 
     file.close();
 }
@@ -274,39 +287,42 @@ void MainWindow::AddToArchive(QVector<int> indexes)
 {
     QFile file(STORAGE);
 
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
 
-    QVector<Note> temp;
+    Note temp;
 
     QDataStream in(&file);
 
-    while (!in.atEnd()){
-        Note n;
+    long long pos = 0;
 
-        in >> n.time;
-        in >> n.data;
-        in >> n.ID;
-        in >> n.isArchived;
+    while (!in.atEnd())
+       {
+           pos = file.pos();
 
-        temp.push_back(n);
-    }
+           in >> temp.time;
+           in >> temp.data;
+           in >> temp.ID;
+           in >> temp.isArchived;
+           in >> temp.type;
 
-    file.close();
+           for (int i = 0; i < indexes.length(); i++)
+           {
+               if (temp.time.toString() == ui->Table->item(indexes[i], 0)->text() && temp.data == ui->Table->item(indexes[i], 1)->text())
+               {
+                   file.seek(pos);
 
-    for(int i=0;i<temp.length();++i){
-        for(int j=0;j<indexes.length();++j){
-            if(temp[i].time.toString()==ui->Table->item(indexes[j], 0)->text() && temp[i].data==ui->Table->item(indexes[j], 1)->text()){
-                temp[i].isArchived=true;
-            }
-        }
-    }
+                   temp.isArchived = true;
 
-    file.open(QIODevice::WriteOnly);
-    QDataStream out(&file);
+                   in << temp.time;
+                   in << temp.data;
+                   in << temp.ID;
+                   in << temp.isArchived;
+                   in << temp.type;
 
-    for(int i =0;i<temp.length();++i){
-        out << temp[i].time << temp[i].data << temp[i].ID << temp[i].isArchived;
-    }
+                   break;
+               }
+           }
+       }
 
     file.close();
 }
@@ -330,6 +346,7 @@ void MainWindow::DeleteSelected(QVector<int> indexes)
         in >> n.data;
         in >> n.ID;
         in >> n.isArchived;
+        in >> n.type;
 
         temp.push_back(n);
         isDeleted.push_back(false);
@@ -352,7 +369,7 @@ void MainWindow::DeleteSelected(QVector<int> indexes)
         if(isDeleted[i]){
             continue;
         }
-        out << temp[i].time << temp[i].data << temp[i].ID << temp[i].isArchived;
+        out << temp[i].time << temp[i].data << temp[i].ID << temp[i].isArchived << temp[i].type;
     }
 
     file.close();
@@ -404,6 +421,8 @@ void MainWindow::on_Delete_clicked()
     }
 
     DeleteSelected(indexes);
+
+    std::sort(indexes.begin(), indexes.end());
 
     for(int i = indexes.length() - 1; i >= 0; i--)
     {
@@ -465,4 +484,10 @@ void MainWindow::on_Table_customContextMenuRequested(const QPoint &pos)
         menu->addAction(new QAction("Action 2", this));
         menu->addAction(new QAction("Action 3", this));
         menu->popup(ui->Table->viewport()->mapToGlobal(pos));
+}
+
+void MainWindow::on_Input_cursorPositionChanged()
+{
+    if(ui->Input->toPlainText().length()>200)
+        return;
 }

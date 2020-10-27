@@ -54,24 +54,30 @@ public:
     QGridLayout *gridLayout_4;
     QGroupBox *Insertion;
     QGridLayout *gridLayout_2;
-    QComboBox *comboBox_Input;
     QTextEdit *Input;
+    QComboBox *comboBox_Input;
     QPushButton *save;
     QGroupBox *Notes;
     QGridLayout *gridLayout_3;
-    QComboBox *comboBox_Notes;
-    QTableWidget *Table;
-    QPushButton *Delete;
     QPushButton *Archivator;
+    QPushButton *Delete;
     QPushButton *DeleteAll;
+    QTabWidget *Work_Table;
+    QWidget *tab_3;
+    QTableWidget *Table;
+    QWidget *tab_4;
+    QTableWidget *Table_2;
     QWidget *tab_2;
     QGroupBox *groupBox;
-    QTableWidget *Archive;
     QPushButton *Dearchivate;
+    QTabWidget *Work_Archive;
+    QWidget *tab_5;
+    QTableWidget *Archive;
+    QWidget *tab_6;
+    QTableWidget *Table_4;
     QMenuBar *menubar;
     QMenu *menu_File;
     QMenu *menu_Edit;
-    QMenu *menu_About;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -137,17 +143,17 @@ public:
         Insertion->setAlignment(Qt::AlignCenter);
         gridLayout_2 = new QGridLayout(Insertion);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        Input = new QTextEdit(Insertion);
+        Input->setObjectName(QString::fromUtf8("Input"));
+
+        gridLayout_2->addWidget(Input, 1, 0, 1, 2);
+
         comboBox_Input = new QComboBox(Insertion);
         comboBox_Input->addItem(QString());
         comboBox_Input->addItem(QString());
         comboBox_Input->setObjectName(QString::fromUtf8("comboBox_Input"));
 
         gridLayout_2->addWidget(comboBox_Input, 0, 1, 1, 1);
-
-        Input = new QTextEdit(Insertion);
-        Input->setObjectName(QString::fromUtf8("Input"));
-
-        gridLayout_2->addWidget(Input, 1, 0, 1, 2);
 
         save = new QPushButton(Insertion);
         save->setObjectName(QString::fromUtf8("save"));
@@ -162,14 +168,28 @@ public:
         Notes->setAlignment(Qt::AlignCenter);
         gridLayout_3 = new QGridLayout(Notes);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        comboBox_Notes = new QComboBox(Notes);
-        comboBox_Notes->addItem(QString());
-        comboBox_Notes->addItem(QString());
-        comboBox_Notes->setObjectName(QString::fromUtf8("comboBox_Notes"));
+        Archivator = new QPushButton(Notes);
+        Archivator->setObjectName(QString::fromUtf8("Archivator"));
+        sizePolicy.setHeightForWidth(Archivator->sizePolicy().hasHeightForWidth());
+        Archivator->setSizePolicy(sizePolicy);
 
-        gridLayout_3->addWidget(comboBox_Notes, 0, 2, 1, 1);
+        gridLayout_3->addWidget(Archivator, 1, 1, 1, 1);
 
-        Table = new QTableWidget(Notes);
+        Delete = new QPushButton(Notes);
+        Delete->setObjectName(QString::fromUtf8("Delete"));
+
+        gridLayout_3->addWidget(Delete, 1, 0, 1, 1);
+
+        DeleteAll = new QPushButton(Notes);
+        DeleteAll->setObjectName(QString::fromUtf8("DeleteAll"));
+
+        gridLayout_3->addWidget(DeleteAll, 1, 2, 1, 1);
+
+        Work_Table = new QTabWidget(Notes);
+        Work_Table->setObjectName(QString::fromUtf8("Work_Table"));
+        tab_3 = new QWidget();
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        Table = new QTableWidget(tab_3);
         if (Table->columnCount() < 2)
             Table->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
@@ -177,6 +197,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         Table->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         Table->setObjectName(QString::fromUtf8("Table"));
+        Table->setGeometry(QRect(0, 0, 401, 401));
         Table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
         Table->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -186,25 +207,30 @@ public:
         Table->horizontalHeader()->setDefaultSectionSize(130);
         Table->horizontalHeader()->setStretchLastSection(true);
         Table->verticalHeader()->setDefaultSectionSize(19);
+        Work_Table->addTab(tab_3, QString());
+        tab_4 = new QWidget();
+        tab_4->setObjectName(QString::fromUtf8("tab_4"));
+        Table_2 = new QTableWidget(tab_4);
+        if (Table_2->columnCount() < 2)
+            Table_2->setColumnCount(2);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        Table_2->setHorizontalHeaderItem(0, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        Table_2->setHorizontalHeaderItem(1, __qtablewidgetitem3);
+        Table_2->setObjectName(QString::fromUtf8("Table_2"));
+        Table_2->setGeometry(QRect(0, 0, 401, 401));
+        Table_2->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        Table_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        Table_2->setSelectionBehavior(QAbstractItemView::SelectRows);
+        Table_2->setGridStyle(Qt::SolidLine);
+        Table_2->setColumnCount(2);
+        Table_2->horizontalHeader()->setMinimumSectionSize(30);
+        Table_2->horizontalHeader()->setDefaultSectionSize(130);
+        Table_2->horizontalHeader()->setStretchLastSection(true);
+        Table_2->verticalHeader()->setDefaultSectionSize(19);
+        Work_Table->addTab(tab_4, QString());
 
-        gridLayout_3->addWidget(Table, 1, 0, 1, 3);
-
-        Delete = new QPushButton(Notes);
-        Delete->setObjectName(QString::fromUtf8("Delete"));
-
-        gridLayout_3->addWidget(Delete, 2, 0, 1, 1);
-
-        Archivator = new QPushButton(Notes);
-        Archivator->setObjectName(QString::fromUtf8("Archivator"));
-        sizePolicy.setHeightForWidth(Archivator->sizePolicy().hasHeightForWidth());
-        Archivator->setSizePolicy(sizePolicy);
-
-        gridLayout_3->addWidget(Archivator, 2, 1, 1, 1);
-
-        DeleteAll = new QPushButton(Notes);
-        DeleteAll->setObjectName(QString::fromUtf8("DeleteAll"));
-
-        gridLayout_3->addWidget(DeleteAll, 2, 2, 1, 1);
+        gridLayout_3->addWidget(Work_Table, 0, 0, 1, 3);
 
 
         gridLayout_4->addWidget(Notes, 0, 1, 1, 1);
@@ -215,24 +241,54 @@ public:
         groupBox = new QGroupBox(tab_2);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(440, 0, 431, 511));
-        Archive = new QTableWidget(groupBox);
+        Dearchivate = new QPushButton(groupBox);
+        Dearchivate->setObjectName(QString::fromUtf8("Dearchivate"));
+        Dearchivate->setGeometry(QRect(160, 480, 121, 21));
+        Work_Archive = new QTabWidget(groupBox);
+        Work_Archive->setObjectName(QString::fromUtf8("Work_Archive"));
+        Work_Archive->setGeometry(QRect(20, 30, 391, 441));
+        tab_5 = new QWidget();
+        tab_5->setObjectName(QString::fromUtf8("tab_5"));
+        Archive = new QTableWidget(tab_5);
         if (Archive->columnCount() < 2)
             Archive->setColumnCount(2);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        Archive->setHorizontalHeaderItem(0, __qtablewidgetitem2);
-        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        Archive->setHorizontalHeaderItem(1, __qtablewidgetitem3);
+        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+        Archive->setHorizontalHeaderItem(0, __qtablewidgetitem4);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        Archive->setHorizontalHeaderItem(1, __qtablewidgetitem5);
         Archive->setObjectName(QString::fromUtf8("Archive"));
-        Archive->setGeometry(QRect(20, 20, 411, 451));
+        Archive->setGeometry(QRect(0, 0, 431, 441));
+        Archive->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         Archive->setEditTriggers(QAbstractItemView::NoEditTriggers);
         Archive->setSelectionBehavior(QAbstractItemView::SelectRows);
         Archive->setGridStyle(Qt::SolidLine);
         Archive->setColumnCount(2);
+        Archive->horizontalHeader()->setMinimumSectionSize(30);
         Archive->horizontalHeader()->setDefaultSectionSize(130);
         Archive->horizontalHeader()->setStretchLastSection(true);
-        Dearchivate = new QPushButton(groupBox);
-        Dearchivate->setObjectName(QString::fromUtf8("Dearchivate"));
-        Dearchivate->setGeometry(QRect(160, 480, 121, 21));
+        Archive->verticalHeader()->setDefaultSectionSize(19);
+        Work_Archive->addTab(tab_5, QString());
+        tab_6 = new QWidget();
+        tab_6->setObjectName(QString::fromUtf8("tab_6"));
+        Table_4 = new QTableWidget(tab_6);
+        if (Table_4->columnCount() < 2)
+            Table_4->setColumnCount(2);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        Table_4->setHorizontalHeaderItem(0, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        Table_4->setHorizontalHeaderItem(1, __qtablewidgetitem7);
+        Table_4->setObjectName(QString::fromUtf8("Table_4"));
+        Table_4->setGeometry(QRect(0, 0, 431, 441));
+        Table_4->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        Table_4->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        Table_4->setSelectionBehavior(QAbstractItemView::SelectRows);
+        Table_4->setGridStyle(Qt::SolidLine);
+        Table_4->setColumnCount(2);
+        Table_4->horizontalHeader()->setMinimumSectionSize(30);
+        Table_4->horizontalHeader()->setDefaultSectionSize(130);
+        Table_4->horizontalHeader()->setStretchLastSection(true);
+        Table_4->verticalHeader()->setDefaultSectionSize(19);
+        Work_Archive->addTab(tab_6, QString());
         tabWidget->addTab(tab_2, QString());
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -242,8 +298,6 @@ public:
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Edit = new QMenu(menubar);
         menu_Edit->setObjectName(QString::fromUtf8("menu_Edit"));
-        menu_About = new QMenu(menubar);
-        menu_About->setObjectName(QString::fromUtf8("menu_About"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -251,7 +305,6 @@ public:
 
         menubar->addAction(menu_File->menuAction());
         menubar->addAction(menu_Edit->menuAction());
-        menubar->addAction(menu_About->menuAction());
         menu_File->addAction(action_New);
         menu_File->addAction(action_Open);
         menu_File->addAction(action_Save);
@@ -268,7 +321,6 @@ public:
         menu_Edit->addSeparator();
         menu_Edit->addAction(action_Select_all);
         menu_Edit->addAction(action_Delete_all);
-        menu_About->addAction(action_About_program);
 
         retranslateUi(MainWindow);
         QObject::connect(action_Exit, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -289,7 +341,9 @@ public:
         QObject::connect(Input, SIGNAL(copyAvailable(bool)), action_Copy, SLOT(setEnabled(bool)));
         QObject::connect(Input, SIGNAL(textChanged()), MainWindow, SLOT(update()));
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
+        Work_Table->setCurrentIndex(0);
+        Work_Archive->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -354,34 +408,42 @@ public:
         actionEnter_new_note->setShortcut(QCoreApplication::translate("MainWindow", "Alt+Return", nullptr));
 #endif // QT_CONFIG(shortcut)
         Insertion->setTitle(QCoreApplication::translate("MainWindow", "Input section", nullptr));
+        Input->setMarkdown(QString());
+        Input->setPlaceholderText(QCoreApplication::translate("MainWindow", "Enter your note here...", nullptr));
         comboBox_Input->setItemText(0, QCoreApplication::translate("MainWindow", "Personal", nullptr));
         comboBox_Input->setItemText(1, QCoreApplication::translate("MainWindow", "Work", nullptr));
 
-        Input->setMarkdown(QString());
-        Input->setPlaceholderText(QCoreApplication::translate("MainWindow", "Enter your note here...", nullptr));
         save->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
         Notes->setTitle(QCoreApplication::translate("MainWindow", "Notes", nullptr));
-        comboBox_Notes->setItemText(0, QCoreApplication::translate("MainWindow", "Personal", nullptr));
-        comboBox_Notes->setItemText(1, QCoreApplication::translate("MainWindow", "Work", nullptr));
-
+        Archivator->setText(QCoreApplication::translate("MainWindow", "Archivate selected", nullptr));
+        Delete->setText(QCoreApplication::translate("MainWindow", "Delete selected", nullptr));
+        DeleteAll->setText(QCoreApplication::translate("MainWindow", "DeleteAll", nullptr));
         QTableWidgetItem *___qtablewidgetitem = Table->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = Table->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
-        Delete->setText(QCoreApplication::translate("MainWindow", "Delete selected", nullptr));
-        Archivator->setText(QCoreApplication::translate("MainWindow", "Archivate selected", nullptr));
-        DeleteAll->setText(QCoreApplication::translate("MainWindow", "DeleteAll", nullptr));
+        Work_Table->setTabText(Work_Table->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Personal", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = Table_2->horizontalHeaderItem(0);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = Table_2->horizontalHeaderItem(1);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
+        Work_Table->setTabText(Work_Table->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Work", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Input and Actual notes", nullptr));
         groupBox->setTitle(QString());
-        QTableWidgetItem *___qtablewidgetitem2 = Archive->horizontalHeaderItem(0);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = Archive->horizontalHeaderItem(1);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
         Dearchivate->setText(QCoreApplication::translate("MainWindow", "Dearchivate selected", nullptr));
+        QTableWidgetItem *___qtablewidgetitem4 = Archive->horizontalHeaderItem(0);
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
+        QTableWidgetItem *___qtablewidgetitem5 = Archive->horizontalHeaderItem(1);
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
+        Work_Archive->setTabText(Work_Archive->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Personal", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = Table_4->horizontalHeaderItem(0);
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
+        QTableWidgetItem *___qtablewidgetitem7 = Table_4->horizontalHeaderItem(1);
+        ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
+        Work_Archive->setTabText(Work_Archive->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Work", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Archive", nullptr));
         menu_File->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         menu_Edit->setTitle(QCoreApplication::translate("MainWindow", "&Edit", nullptr));
-        menu_About->setTitle(QCoreApplication::translate("MainWindow", "&About", nullptr));
     } // retranslateUi
 
 };
