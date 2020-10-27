@@ -374,6 +374,8 @@ void MainWindow::on_Archivator_clicked()
 
     AddToArchive(indexes);
 
+    std::sort(indexes.begin(), indexes.end());
+
     for(int i = indexes.length() - 1; i >= 0; i--)
     {
         ui->Table->removeRow(indexes[i]);
@@ -424,6 +426,8 @@ void MainWindow::on_Dearchivate_clicked()
     }
 
      RemoveFromArchive(indexes);
+
+    std::sort(indexes.begin(), indexes.end());
 
     for(int i = indexes.length() - 1; i >= 0; i--)
     {

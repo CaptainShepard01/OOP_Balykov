@@ -50,7 +50,7 @@ public:
     QWidget *centralwidget;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QGridLayout *gridLayout_4;
     QGroupBox *Insertion;
     QGridLayout *gridLayout_2;
@@ -65,6 +65,7 @@ public:
     QPushButton *Archivator;
     QPushButton *DeleteAll;
     QWidget *tab_2;
+    QGroupBox *groupBox;
     QTableWidget *Archive;
     QPushButton *Dearchivate;
     QMenuBar *menubar;
@@ -125,13 +126,13 @@ public:
         tabWidget->setGeometry(QRect(0, 0, 881, 541));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
-        widget = new QWidget(tab);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 0, 861, 501));
-        gridLayout_4 = new QGridLayout(widget);
+        layoutWidget = new QWidget(tab);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 0, 861, 501));
+        gridLayout_4 = new QGridLayout(layoutWidget);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         gridLayout_4->setContentsMargins(0, 0, 0, 0);
-        Insertion = new QGroupBox(widget);
+        Insertion = new QGroupBox(layoutWidget);
         Insertion->setObjectName(QString::fromUtf8("Insertion"));
         Insertion->setAlignment(Qt::AlignCenter);
         gridLayout_2 = new QGridLayout(Insertion);
@@ -156,7 +157,7 @@ public:
 
         gridLayout_4->addWidget(Insertion, 0, 0, 1, 1);
 
-        Notes = new QGroupBox(widget);
+        Notes = new QGroupBox(layoutWidget);
         Notes->setObjectName(QString::fromUtf8("Notes"));
         Notes->setAlignment(Qt::AlignCenter);
         gridLayout_3 = new QGridLayout(Notes);
@@ -211,7 +212,10 @@ public:
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
-        Archive = new QTableWidget(tab_2);
+        groupBox = new QGroupBox(tab_2);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setGeometry(QRect(440, 0, 431, 511));
+        Archive = new QTableWidget(groupBox);
         if (Archive->columnCount() < 2)
             Archive->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
@@ -219,16 +223,16 @@ public:
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         Archive->setHorizontalHeaderItem(1, __qtablewidgetitem3);
         Archive->setObjectName(QString::fromUtf8("Archive"));
-        Archive->setGeometry(QRect(440, 50, 421, 401));
+        Archive->setGeometry(QRect(20, 20, 411, 451));
         Archive->setEditTriggers(QAbstractItemView::NoEditTriggers);
         Archive->setSelectionBehavior(QAbstractItemView::SelectRows);
         Archive->setGridStyle(Qt::SolidLine);
         Archive->setColumnCount(2);
         Archive->horizontalHeader()->setDefaultSectionSize(130);
         Archive->horizontalHeader()->setStretchLastSection(true);
-        Dearchivate = new QPushButton(tab_2);
+        Dearchivate = new QPushButton(groupBox);
         Dearchivate->setObjectName(QString::fromUtf8("Dearchivate"));
-        Dearchivate->setGeometry(QRect(600, 450, 121, 21));
+        Dearchivate->setGeometry(QRect(160, 480, 121, 21));
         tabWidget->addTab(tab_2, QString());
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -285,7 +289,7 @@ public:
         QObject::connect(Input, SIGNAL(copyAvailable(bool)), action_Copy, SLOT(setEnabled(bool)));
         QObject::connect(Input, SIGNAL(textChanged()), MainWindow, SLOT(update()));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -368,6 +372,7 @@ public:
         Archivator->setText(QCoreApplication::translate("MainWindow", "Archivate selected", nullptr));
         DeleteAll->setText(QCoreApplication::translate("MainWindow", "DeleteAll", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Input and Actual notes", nullptr));
+        groupBox->setTitle(QString());
         QTableWidgetItem *___qtablewidgetitem2 = Archive->horizontalHeaderItem(0);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = Archive->horizontalHeaderItem(1);
