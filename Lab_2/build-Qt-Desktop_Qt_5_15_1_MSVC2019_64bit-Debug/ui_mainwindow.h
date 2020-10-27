@@ -62,19 +62,19 @@ public:
     QPushButton *Archivator;
     QPushButton *Delete;
     QPushButton *DeleteAll;
-    QTabWidget *Work_Table;
+    QTabWidget *Table_Tab;
     QWidget *tab_3;
     QTableWidget *Table;
     QWidget *tab_4;
-    QTableWidget *Table_2;
+    QTableWidget *Work_Table;
     QWidget *tab_2;
     QGroupBox *groupBox;
     QPushButton *Dearchivate;
-    QTabWidget *Work_Archive;
+    QTabWidget *Archive_Tab;
     QWidget *tab_5;
     QTableWidget *Archive;
     QWidget *tab_6;
-    QTableWidget *Table_4;
+    QTableWidget *Work_Archive;
     QMenuBar *menubar;
     QMenu *menu_File;
     QMenu *menu_Edit;
@@ -185,8 +185,8 @@ public:
 
         gridLayout_3->addWidget(DeleteAll, 1, 2, 1, 1);
 
-        Work_Table = new QTabWidget(Notes);
-        Work_Table->setObjectName(QString::fromUtf8("Work_Table"));
+        Table_Tab = new QTabWidget(Notes);
+        Table_Tab->setObjectName(QString::fromUtf8("Table_Tab"));
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
         Table = new QTableWidget(tab_3);
@@ -207,30 +207,30 @@ public:
         Table->horizontalHeader()->setDefaultSectionSize(130);
         Table->horizontalHeader()->setStretchLastSection(true);
         Table->verticalHeader()->setDefaultSectionSize(19);
-        Work_Table->addTab(tab_3, QString());
+        Table_Tab->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QString::fromUtf8("tab_4"));
-        Table_2 = new QTableWidget(tab_4);
-        if (Table_2->columnCount() < 2)
-            Table_2->setColumnCount(2);
+        Work_Table = new QTableWidget(tab_4);
+        if (Work_Table->columnCount() < 2)
+            Work_Table->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        Table_2->setHorizontalHeaderItem(0, __qtablewidgetitem2);
+        Work_Table->setHorizontalHeaderItem(0, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        Table_2->setHorizontalHeaderItem(1, __qtablewidgetitem3);
-        Table_2->setObjectName(QString::fromUtf8("Table_2"));
-        Table_2->setGeometry(QRect(0, 0, 401, 401));
-        Table_2->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
-        Table_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        Table_2->setSelectionBehavior(QAbstractItemView::SelectRows);
-        Table_2->setGridStyle(Qt::SolidLine);
-        Table_2->setColumnCount(2);
-        Table_2->horizontalHeader()->setMinimumSectionSize(30);
-        Table_2->horizontalHeader()->setDefaultSectionSize(130);
-        Table_2->horizontalHeader()->setStretchLastSection(true);
-        Table_2->verticalHeader()->setDefaultSectionSize(19);
-        Work_Table->addTab(tab_4, QString());
+        Work_Table->setHorizontalHeaderItem(1, __qtablewidgetitem3);
+        Work_Table->setObjectName(QString::fromUtf8("Work_Table"));
+        Work_Table->setGeometry(QRect(0, 0, 401, 401));
+        Work_Table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        Work_Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        Work_Table->setSelectionBehavior(QAbstractItemView::SelectRows);
+        Work_Table->setGridStyle(Qt::SolidLine);
+        Work_Table->setColumnCount(2);
+        Work_Table->horizontalHeader()->setMinimumSectionSize(30);
+        Work_Table->horizontalHeader()->setDefaultSectionSize(130);
+        Work_Table->horizontalHeader()->setStretchLastSection(true);
+        Work_Table->verticalHeader()->setDefaultSectionSize(19);
+        Table_Tab->addTab(tab_4, QString());
 
-        gridLayout_3->addWidget(Work_Table, 0, 0, 1, 3);
+        gridLayout_3->addWidget(Table_Tab, 0, 0, 1, 3);
 
 
         gridLayout_4->addWidget(Notes, 0, 1, 1, 1);
@@ -244,9 +244,9 @@ public:
         Dearchivate = new QPushButton(groupBox);
         Dearchivate->setObjectName(QString::fromUtf8("Dearchivate"));
         Dearchivate->setGeometry(QRect(160, 480, 121, 21));
-        Work_Archive = new QTabWidget(groupBox);
-        Work_Archive->setObjectName(QString::fromUtf8("Work_Archive"));
-        Work_Archive->setGeometry(QRect(20, 30, 391, 441));
+        Archive_Tab = new QTabWidget(groupBox);
+        Archive_Tab->setObjectName(QString::fromUtf8("Archive_Tab"));
+        Archive_Tab->setGeometry(QRect(20, 30, 391, 441));
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
         Archive = new QTableWidget(tab_5);
@@ -267,28 +267,28 @@ public:
         Archive->horizontalHeader()->setDefaultSectionSize(130);
         Archive->horizontalHeader()->setStretchLastSection(true);
         Archive->verticalHeader()->setDefaultSectionSize(19);
-        Work_Archive->addTab(tab_5, QString());
+        Archive_Tab->addTab(tab_5, QString());
         tab_6 = new QWidget();
         tab_6->setObjectName(QString::fromUtf8("tab_6"));
-        Table_4 = new QTableWidget(tab_6);
-        if (Table_4->columnCount() < 2)
-            Table_4->setColumnCount(2);
+        Work_Archive = new QTableWidget(tab_6);
+        if (Work_Archive->columnCount() < 2)
+            Work_Archive->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
-        Table_4->setHorizontalHeaderItem(0, __qtablewidgetitem6);
+        Work_Archive->setHorizontalHeaderItem(0, __qtablewidgetitem6);
         QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
-        Table_4->setHorizontalHeaderItem(1, __qtablewidgetitem7);
-        Table_4->setObjectName(QString::fromUtf8("Table_4"));
-        Table_4->setGeometry(QRect(0, 0, 431, 441));
-        Table_4->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
-        Table_4->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        Table_4->setSelectionBehavior(QAbstractItemView::SelectRows);
-        Table_4->setGridStyle(Qt::SolidLine);
-        Table_4->setColumnCount(2);
-        Table_4->horizontalHeader()->setMinimumSectionSize(30);
-        Table_4->horizontalHeader()->setDefaultSectionSize(130);
-        Table_4->horizontalHeader()->setStretchLastSection(true);
-        Table_4->verticalHeader()->setDefaultSectionSize(19);
-        Work_Archive->addTab(tab_6, QString());
+        Work_Archive->setHorizontalHeaderItem(1, __qtablewidgetitem7);
+        Work_Archive->setObjectName(QString::fromUtf8("Work_Archive"));
+        Work_Archive->setGeometry(QRect(0, 0, 431, 441));
+        Work_Archive->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        Work_Archive->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        Work_Archive->setSelectionBehavior(QAbstractItemView::SelectRows);
+        Work_Archive->setGridStyle(Qt::SolidLine);
+        Work_Archive->setColumnCount(2);
+        Work_Archive->horizontalHeader()->setMinimumSectionSize(30);
+        Work_Archive->horizontalHeader()->setDefaultSectionSize(130);
+        Work_Archive->horizontalHeader()->setStretchLastSection(true);
+        Work_Archive->verticalHeader()->setDefaultSectionSize(19);
+        Archive_Tab->addTab(tab_6, QString());
         tabWidget->addTab(tab_2, QString());
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -342,8 +342,8 @@ public:
         QObject::connect(Input, SIGNAL(textChanged()), MainWindow, SLOT(update()));
 
         tabWidget->setCurrentIndex(0);
-        Work_Table->setCurrentIndex(0);
-        Work_Archive->setCurrentIndex(0);
+        Table_Tab->setCurrentIndex(0);
+        Archive_Tab->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -422,12 +422,12 @@ public:
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = Table->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
-        Work_Table->setTabText(Work_Table->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Personal", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = Table_2->horizontalHeaderItem(0);
+        Table_Tab->setTabText(Table_Tab->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Personal", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = Work_Table->horizontalHeaderItem(0);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = Table_2->horizontalHeaderItem(1);
+        QTableWidgetItem *___qtablewidgetitem3 = Work_Table->horizontalHeaderItem(1);
         ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
-        Work_Table->setTabText(Work_Table->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Work", nullptr));
+        Table_Tab->setTabText(Table_Tab->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Work", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Input and Actual notes", nullptr));
         groupBox->setTitle(QString());
         Dearchivate->setText(QCoreApplication::translate("MainWindow", "Dearchivate selected", nullptr));
@@ -435,12 +435,12 @@ public:
         ___qtablewidgetitem4->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = Archive->horizontalHeaderItem(1);
         ___qtablewidgetitem5->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
-        Work_Archive->setTabText(Work_Archive->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Personal", nullptr));
-        QTableWidgetItem *___qtablewidgetitem6 = Table_4->horizontalHeaderItem(0);
+        Archive_Tab->setTabText(Archive_Tab->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Personal", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = Work_Archive->horizontalHeaderItem(0);
         ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
-        QTableWidgetItem *___qtablewidgetitem7 = Table_4->horizontalHeaderItem(1);
+        QTableWidgetItem *___qtablewidgetitem7 = Work_Archive->horizontalHeaderItem(1);
         ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "Note", nullptr));
-        Work_Archive->setTabText(Work_Archive->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Work", nullptr));
+        Archive_Tab->setTabText(Archive_Tab->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Work", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Archive", nullptr));
         menu_File->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         menu_Edit->setTitle(QCoreApplication::translate("MainWindow", "&Edit", nullptr));

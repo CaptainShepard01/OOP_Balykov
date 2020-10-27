@@ -127,6 +127,8 @@ void MainWindow::StartReadingArchive()
     {
         QString str = notes[i].time.toString();
 
+        if(notes[i].type=="Personal"){
+
         ui->Archive->insertRow(0);
 
         auto time = new QTableWidgetItem(notes[i].time.toString());
@@ -136,10 +138,26 @@ void MainWindow::StartReadingArchive()
         auto data = new QTableWidgetItem(notes[i].data);
 
         ui->Archive->setItem(0,1,data);
+        }
+
+        else{
+            ui->Work_Archive->insertRow(0);
+
+            auto time = new QTableWidgetItem(notes[i].time.toString());
+
+            ui->Work_Archive->setItem(0,0,time);
+
+            auto data = new QTableWidgetItem(notes[i].data);
+
+            ui->Work_Archive->setItem(0,1,data);
+        }
     }
 
     ui->Archive->resizeColumnToContents(0);
     ui->Archive->resizeRowsToContents();
+
+    ui->Work_Archive->resizeColumnToContents(0);
+    ui->Work_Archive->resizeRowsToContents();
 }
 
 void MainWindow::StartReading()
@@ -152,6 +170,7 @@ void MainWindow::StartReading()
     {
         QString str = notes[i].time.toString();
 
+        if(notes[i].type=="Personal"){
         ui->Table->insertRow(0);
 
         auto time = new QTableWidgetItem(notes[i].time.toString());
@@ -161,9 +180,25 @@ void MainWindow::StartReading()
         auto data = new QTableWidgetItem(notes[i].data);
 
         ui->Table->setItem(0,1,data);
+        }
+
+        else{
+            ui->Work_Table->insertRow(0);
+
+            auto time = new QTableWidgetItem(notes[i].time.toString());
+
+            ui->Work_Table->setItem(0,0,time);
+
+            auto data = new QTableWidgetItem(notes[i].data);
+
+            ui->Work_Table->setItem(0,1,data);
+        }
     }
     ui->Table->resizeColumnToContents(0);
     ui->Table->resizeRowsToContents();
+
+    ui->Work_Table->resizeColumnToContents(0);
+    ui->Work_Table->resizeRowsToContents();
 }
 
 int LastIndex(QString filename)
@@ -206,6 +241,7 @@ void MainWindow::on_save_clicked()
 
     ui->Input->clear();
 
+    if(note.type=="Personal"){
     ui->Table->insertRow(0);
 
     auto time = new QTableWidgetItem(note.time.toString());
@@ -218,6 +254,21 @@ void MainWindow::on_save_clicked()
 
     ui->Table->resizeRowsToContents();
     ui->Table->resizeColumnToContents(0);
+    }
+    else{
+        ui->Work_Table->insertRow(0);
+
+        auto time = new QTableWidgetItem(note.time.toString());
+
+        ui->Work_Table->setItem(0,0,time);
+
+        auto data = new QTableWidgetItem(note.data);
+
+        ui->Work_Table->setItem(0,1,data);
+
+        ui->Work_Table->resizeRowsToContents();
+        ui->Work_Table->resizeColumnToContents(0);
+    }
 
     note.ID=LastIndex(STORAGE)+1;
 
@@ -327,17 +378,22 @@ void MainWindow::AddToArchive(QVector<int> indexes)
     file.close();
 }
 
-void MainWindow::DeleteSelected(QVector<int> indexes)
+void MainWindow::DeleteSelected(QVector<int> indexes, QString filename)
 {
-    QFile file(STORAGE);
+    QFile file(filename);
+    QFile file_del("TEMP");
 
     file.open(QIODevice::ReadOnly);
+    file_del.open(QIODevice::WriteOnly);
 
-    QVector<Note> temp;
+    Note temp;
 
     QVector<bool> isDeleted;
 
+    bool toDelete = false;
+
     QDataStream in(&file);
+    QDataStream in_del(&file_del);
 
     while (!in.atEnd()){
         Note n;
@@ -348,31 +404,27 @@ void MainWindow::DeleteSelected(QVector<int> indexes)
         in >> n.isArchived;
         in >> n.type;
 
-        temp.push_back(n);
-        isDeleted.push_back(false);
-    }
-
-    file.close();
-
-    for(int i=0;i<temp.length();++i){
-        for(int j=0;j<indexes.length();++j){
-            if(temp[i].time.toString()==ui->Table->item(indexes[j], 0)->text() && temp[i].data==ui->Table->item(indexes[j], 1)->text()){
-                isDeleted[i]=true;
+        for (int i = 0; i < indexes.length(); i++)
+        {
+            if (temp.time.toString() == ui->Table->item(indexes[i], 0)->text() && temp.data == ui->Table->item(indexes[i], 1)->text())
+            {
+               toDelete = true;
+               break;
             }
         }
-    }
 
-    file.open(QIODevice::WriteOnly);
-    QDataStream out(&file);
-
-    for(int i =0;i<temp.length();++i){
-        if(isDeleted[i]){
-            continue;
+        if(!toDelete){
+            in_del << n.time << n.data << n.ID << n.isArchived << n.type;
         }
-        out << temp[i].time << temp[i].data << temp[i].ID << temp[i].isArchived << temp[i].type;
+
+        toDelete = false;
     }
 
-    file.close();
+   file.close();
+   file_del.close();
+
+   remove(filename.toStdString().c_str());
+   rename("TEMP", filename.toStdString().c_str());
 }
 
 void MainWindow::on_Archivator_clicked()
@@ -420,7 +472,7 @@ void MainWindow::on_Delete_clicked()
         //qDebug() << indexes[i];
     }
 
-    DeleteSelected(indexes);
+    DeleteSelected(indexes, STORAGE);
 
     std::sort(indexes.begin(), indexes.end());
 

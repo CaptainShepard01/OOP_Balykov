@@ -27,7 +27,7 @@ private slots:
 
     void AddToArchive(QVector<int> indexes);
     void RemoveFromArchive(QVector<int> indexes);
-    void DeleteSelected(QVector<int> indexes);
+    void DeleteSelected(QVector<int> indexes, QString filename);
     void on_Archivator_clicked();
 
     void on_Delete_clicked();

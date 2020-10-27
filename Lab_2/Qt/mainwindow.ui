@@ -141,7 +141,7 @@
            </widget>
           </item>
           <item row="0" column="0" colspan="3">
-           <widget class="QTabWidget" name="Work_Table">
+           <widget class="QTabWidget" name="Table_Tab">
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -201,7 +201,7 @@
              <attribute name="title">
               <string>Work</string>
              </attribute>
-             <widget class="QTableWidget" name="Table_2">
+             <widget class="QTableWidget" name="Work_Table">
               <property name="geometry">
                <rect>
                 <x>0</x>
@@ -286,7 +286,7 @@
         <string>Dearchivate selected</string>
        </property>
       </widget>
-      <widget class="QTabWidget" name="Work_Archive">
+      <widget class="QTabWidget" name="Archive_Tab">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -354,7 +354,7 @@
         <attribute name="title">
          <string>Work</string>
         </attribute>
-        <widget class="QTableWidget" name="Table_4">
+        <widget class="QTableWidget" name="Work_Archive">
          <property name="geometry">
           <rect>
            <x>0</x>
