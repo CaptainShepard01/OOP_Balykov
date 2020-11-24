@@ -214,17 +214,17 @@ TEST_CASE("Week number") {
 
 	SUBCASE("Day at the beginning of the year") {
 		Date date{ 5,1,2020,0,40,0 };
-		CHECK(date.getWeekNumberInYear_naive() == 1);
+		CHECK(date.getWeekNumberInYear() == 1);
 	}
 
 	SUBCASE("29.09.2020") {
 		Date date{ 29, 9, 2020, 0, 0, 0 };
-		CHECK(date.getWeekNumberInYear_naive() == 40);
+		CHECK(date.getWeekNumberInYear() == 40);
 	}
 
 	SUBCASE("20.01.2022") {
 		Date date{ 20, 1, 2022, 0, 0, 0 };
-		CHECK(date.getWeekNumberInYear_naive() == 3);
+		CHECK(date.getWeekNumberInYear() == 3);
 	}
 }
 
