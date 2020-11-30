@@ -81,6 +81,30 @@ void Player::OnKeyTyped(sf::Keyboard::Key aKey)
 			myCurrentBullet = 0;
 		}
 	}
+	else if (aKey == sf::Keyboard::Down)
+	{
+		myBullets[myCurrentBullet] = Box(myBox.x + 12, myBox.y + 12, 16, 8);
+		myBullets[myCurrentBullet].SetHorizontal(0);
+		myBullets[myCurrentBullet].SetVertical(5);
+
+		myCurrentBullet = myCurrentBullet + 1;
+		if (myCurrentBullet == myBulletCount)
+		{
+			myCurrentBullet = 0;
+		}
+	}
+	else if (aKey == sf::Keyboard::Up)
+	{
+		myBullets[myCurrentBullet] = Box(myBox.x + 12, myBox.y + 12, 16, 8);
+		myBullets[myCurrentBullet].SetHorizontal(0);
+		myBullets[myCurrentBullet].SetVertical(-5);
+
+		myCurrentBullet = myCurrentBullet + 1;
+		if (myCurrentBullet == myBulletCount)
+		{
+			myCurrentBullet = 0;
+		}
+	}
 }
 
 void Player::OnKeyReleased(sf::Keyboard::Key aKey)

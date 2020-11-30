@@ -36,7 +36,7 @@ int main() {
     // Shorthand string replace
     std::cout << verex().find("short").replace("I wrote a short text", "long") << std::endl;
 
-    verex expr3 = verex().find("This").anything().word().then(" the ").then("most interesting test!");
+    verex expr3 = verex().find("This").anything().word().then(" the ").word().then(" interesting test!");
     std::cout << expr3 << std::endl;
 
     std::cout << (expr3.test("This is the most interesting test!") ? "Matches!" : "Doesn't match!") << std::endl;
